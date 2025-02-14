@@ -57,11 +57,11 @@ public class DataManager
             
             int stageNum = int.Parse(values[0]);
             
-            int row = int.Parse(values[1]);
-            int col = int.Parse(values[2]);
-            int unitType = int.Parse(values[3]);
-            int blockColor = int.Parse(values[4]);
-            int blockDir = int.Parse(values[5]);
+            int row = int.Parse(values[2]);
+            int col = int.Parse(values[3]);
+            int unitType = int.Parse(values[4]);
+            int blockColor = int.Parse(values[5]);
+            int blockDir = int.Parse(values[6]);
             
             if(chocolateBlocks.ContainsKey(stageNum) == false)
                 chocolateBlocks.Add(stageNum, new List<BlockData>());
