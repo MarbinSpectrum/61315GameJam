@@ -27,9 +27,7 @@ public class MapManager
             {
                 GameObject groundObj = mapGroundList[gIdx];
                 groundObj.gameObject.SetActive(true);
-                groundObj.transform.position = new Vector3(
-                    x - mapData.M/2f + (mapData.M%2!=0?0.5f : 0), 
-                    y-mapData.N/2f + (mapData.N%2!=0?0.5f : 0),0);
+                groundObj.transform.position = new Vector3(x,y, 0);
                 gIdx++;
             }
         }

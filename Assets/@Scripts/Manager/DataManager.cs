@@ -67,6 +67,7 @@ public class DataManager
                 chocolateBlocks.Add(stageNum, new List<BlockData>());
             if(eaterBlocks.ContainsKey(stageNum) == false)
                 eaterBlocks.Add(stageNum, new List<BlockData>());
+            
             if((EBlockType)unitType == EBlockType.Eater)
                 eaterBlocks[stageNum].Add(new BlockData(row,col,unitType,blockColor,blockDir));
             else
