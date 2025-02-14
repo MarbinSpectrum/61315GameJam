@@ -11,15 +11,14 @@ public class Eater : MonoBehaviour
     // --------------------------------------------------
     // Variables
     // --------------------------------------------------
-    // private BlockData _data;
+    private BlockData _data;
     
     // --------------------------------------------------
     // Functions
     // --------------------------------------------------
-    public void Init()
+    public void Init(BlockData data)
     {
-        // TODO : 매개변수로 BlockData 받아오기
-        // _data = data;
+        _data = data;
     }
     
     public void OnEat()

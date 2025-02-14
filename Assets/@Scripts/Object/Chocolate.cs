@@ -6,19 +6,22 @@ public class Chocolate : MonoBehaviour
     // --------------------------------------------------
     // Variables
     // --------------------------------------------------
-    // private BlockData _data;
+    private BlockData _data;
     
     // --------------------------------------------------
     // Functions
     // --------------------------------------------------
-    public void Init()
+    public void Init(BlockData data, int n, int m)
     {
-        // TODO : 매개변수로 BlockData 받아오기
-        // _data = data;
+        _data = data;
+        var x = (m - 1) / 2.0f - data.col;
+        var z = (n - 1) / 2.0f - data.row;
+        transform.position = new Vector3(x, 0, z);
         
         Utils.AddUIEvent(gameObject, OnDragEvent, Define.EUIEvent.Drag);
         Utils.AddUIEvent(gameObject, OnDropEvent, Define.EUIEvent.Drop);
     }
+    
 
     private void OnDragEvent(PointerEventData eventData)
     {

@@ -121,10 +121,13 @@ public class DataManager
 
     public List<BlockData> GetChocolateDatas(int pStageNum)
     {
-        //pStageNum에 해당하는 초콜릿 블록 반환
-        List<BlockData> tempBlock = null;
-        chocolateBlocks.TryGetValue(pStageNum, out tempBlock);
-        return tempBlock;
+        if (!chocolateBlocks.TryGetValue(pStageNum, out var blockDatas))
+        {
+            Debug.LogError($"[DataManager] GetChocolateDatas() : {pStageNum}에 해당하는 초콜릿 블록이 없습니다.");
+            return null;
+        }
+        
+        return blockDatas;
     }
 
     public List<BlockData> GetEaterDatas(int pStageNum)

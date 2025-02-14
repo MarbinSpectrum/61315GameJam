@@ -34,12 +34,12 @@ public static class Define
     
     public enum EBlockType
     {
-        Block1x1 = 1,//한칸짜리
-        Block1x2 = 2,//세로 두칸짜리
-        Blcok2x1 = 3,//가로 두칸짜리
-        block2x2 = 4,//4칸 정사각형 블록
+        Chocolate1 = 1, // 한칸짜리
+        Chocolate2 = 2, // 세로 두칸짜리
+        Chocolate3 = 3, // 가로 두칸짜리
+        Chocolate4 = 4, // 4칸 정사각형 블록
     
-        Eater = 10, //블록 먹는애
+        Eater = 10, // 이터
     }
 
     public enum EColor
