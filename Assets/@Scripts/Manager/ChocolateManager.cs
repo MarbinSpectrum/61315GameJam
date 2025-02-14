@@ -8,11 +8,19 @@ public class ChocolateManager
     
     public void Init()
     {
-        var stageNum = Managers.Game.stageNum;
+        
+    }
+    
+    public void SetChocolates(int stageNum)
+    {
+        foreach (var chocolate in _chocolateList)
+        {
+            Object.Destroy(chocolate.gameObject);
+        }
+        _chocolateList.Clear();
+        
         var mapData = Managers.Data.GetMapData(stageNum);
         _chocolateData = Managers.Data.GetChocolateDatas(stageNum);
-        _chocolateList.Clear();
-
         foreach (var data in _chocolateData)
         {
             InstantiateChocolate(data, mapData.N, mapData.M);

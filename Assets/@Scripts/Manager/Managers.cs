@@ -13,5 +13,4 @@ public class Managers : SingletonBase<Managers>
     public static ChocolateManager Chocolate => Instance._chocolateManager;
     public static MapManager Map => Instance._mapManager;
     public static GameManager Game => Instance._gameManager;
-
 }
