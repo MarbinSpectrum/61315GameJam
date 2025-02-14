@@ -16,6 +16,9 @@ public class MainScene : MonoBehaviour
         var mapData = Managers.Data.GetMapData(stageNum);
         Managers.Map.CreateMap(stageNum);
         Managers.Chocolate.SetChocolates(stageNum);
-        Camera.main.transform.position += new Vector3(mapData.M / 2f - 0.5f , mapData.N / 2f - 0.5f,0);
+        Managers.Eater.SetEaters(stageNum);
+        
+        
+        Camera.main.transform.position += new Vector3(mapData.M / 2f + 0.5f , mapData.N / 2f + 0.5f,0);
     }
 }
