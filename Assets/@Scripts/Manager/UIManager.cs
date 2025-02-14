@@ -64,20 +64,27 @@ public class UIManager
         if(string.IsNullOrEmpty(name))
             name = typeof(T).Name;
         
-        var go = Resources.Load<UI_Popup>($"UI/Popup/{name}.prefab");
-
+        var go = Resources.Load<UI_Popup>($"UI/Popup/{name}");
+        if (go == null)
+        {
+            Debug.Log($"[UIManager.ShowPopupUI] UI/Popup/{name}를 생성 실패했습니다.");
+            return null;
+        }
+        
+        UI_Popup newObj = Object.Instantiate(go);
+        
         if (_popupPool.Count != 0)
         {
             var prevPopup = _popupPool.Peek();
             prevPopup.OnOffDim(false);
         }
         
-        var popup = go.GetOrAddComponent<T>();
+        var popup = newObj.GetOrAddComponent<T>();
         _popupPool.Push(popup);
         
         Debug.Log($"[UIManager.ShowPopupUI] {popup.name}를 생성하였습니다.");
         
-        go.transform.SetParent(Root.transform);
+        newObj.transform.SetParent(Root.transform);
         return popup;
     }
     

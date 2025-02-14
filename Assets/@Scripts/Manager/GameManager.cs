@@ -11,4 +11,12 @@ public class GameManager
         limitTime = 0;
         stageNum = 1;
     }
+
+    public void CreateStage()
+    {
+        Managers.Map.CreateMap(stageNum);
+        
+        
+        
+    }
 }
