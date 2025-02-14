@@ -9,12 +9,12 @@ public class MapManager
     
     public void Init()
     {
-        ground = Resources.Load<GameObject>("GroundPath");
+        ground = Resources.Load<GameObject>("ground");
     }
 
     public void CreateMap(int pStageNum)
     {
-        MapData mapData = null;
+        MapData mapData = Managers.Data.GetMapData(pStageNum);
         int createCnt = (mapData.N + 1) * (mapData.M + 1) - mapGroundList.Count;
         for (int i = 0; i < createCnt; i++)
             mapGroundList.Add(Object.Instantiate(ground));
@@ -25,7 +25,11 @@ public class MapManager
         {
             for (int x = 0; x < mapData.M; x++)
             {
-                mapGroundList[gIdx].gameObject.SetActive(true);
+                GameObject groundObj = mapGroundList[gIdx];
+                groundObj.gameObject.SetActive(true);
+                groundObj.transform.position = new Vector3(
+                    x - mapData.M/2f + (mapData.M%2!=0?0.5f : 0), 
+                    y-mapData.N/2f + (mapData.N%2!=0?0.5f : 0),0);
                 gIdx++;
             }
         }
