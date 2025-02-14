@@ -14,8 +14,8 @@ public class Chocolate : MonoBehaviour
     public void Init(BlockData data, int n, int m)
     {
         _data = data;
-        var x = (data.col - 1);
-        var y = -(data.row - 1);
+        var x = data.col - 1;
+        var y = data.row - 1;
         transform.position = new Vector3(x, y, 0);
         
         Utils.AddUIEvent(gameObject, OnDragEvent, Define.EUIEvent.Drag);
