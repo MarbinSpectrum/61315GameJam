@@ -19,19 +19,18 @@ public class ChocolateManager
         }
         _chocolateList.Clear();
         
-        var mapData = Managers.Data.GetMapData(stageNum);
         _chocolateData = Managers.Data.GetChocolateDatas(stageNum);
         foreach (var data in _chocolateData)
         {
-            InstantiateChocolate(data, mapData.N, mapData.M);
+            InstantiateChocolate(data);
         }
     }
     
-    private void InstantiateChocolate(BlockData data, int n, int m)
+    private void InstantiateChocolate(BlockData data)
     {
         var objectChocolate = Resources.Load<GameObject>(data.blockType.ToString());
         var chocolate = Object.Instantiate(objectChocolate).GetComponent<Chocolate>();
-        chocolate.Init(data, n, m);
+        chocolate.Init(data);
         _chocolateList.Add(chocolate);
     }
 }

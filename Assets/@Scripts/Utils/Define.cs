@@ -57,4 +57,9 @@ public static class Define
         Left = 3,
         Right = 4,
     }
+
+    public enum ETagType
+    {
+        Chocolate,
+    }
 }
