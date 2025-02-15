@@ -65,7 +65,9 @@ public class Chocolate : MonoBehaviour
         _data = data;
         var x = data.col;
         var y = data.row;
-        transform.position = new Vector3(x, y, 0);
+        int stageNum = Managers.Game.stageNum;
+        var mapdata = Managers.Data.GetMapData(stageNum);
+        transform.position = new Vector3(x, mapdata.N + 1 - y, 0);
         _originPos = transform.position;
     }
     
