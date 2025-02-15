@@ -113,9 +113,10 @@ public class DataManager
             int stageNum = int.Parse(values[0]);
             int n = int.Parse(values[1]);
             int m = int.Parse(values[2]);
+            int limitTime = int.Parse(values[3]);
             
             if(mapData.ContainsKey(stageNum) == false)
-                mapData.Add(stageNum, new MapData(n,m));
+                mapData.Add(stageNum, new MapData(n,m,limitTime));
 
         }
     }
