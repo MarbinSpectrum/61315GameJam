@@ -61,5 +61,6 @@ public static class Define
     public enum ETagType
     {
         Chocolate,
+        Eater,
     }
 }

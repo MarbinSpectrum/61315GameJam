@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6999299900507016550}
   - component: {fileID: 5856018217677805463}
+  - component: {fileID: 5356665206100450028}
+  - component: {fileID: -7992585795643283488}
   m_Layer: 0
   m_Name: Chocolate4
-  m_TagString: Untagged
+  m_TagString: Chocolate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,7 +47,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f122c7e2e4c7f694a9ec8c9aa58655e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbody: {fileID: 5453063502441069489}
+  rigidbody: {fileID: -7992585795643283488}
+--- !u!65 &5356665206100450028
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3355967667021299938}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.8, y: 3.8, z: 0.4360959}
+  m_Center: {x: 2, y: 2, z: 0.21804795}
+--- !u!54 &-7992585795643283488
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3355967667021299938}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1001 &7512478120268257592
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54,18 +104,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6999299900507016550}
     m_Modifications:
-    - target: {fileID: 5016741325962708826, guid: 885b003b1de77a141818098eccdcb06a, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5016741325962708826, guid: 885b003b1de77a141818098eccdcb06a, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5016741325962708826, guid: 885b003b1de77a141818098eccdcb06a, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5016741325962708826, guid: 885b003b1de77a141818098eccdcb06a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2
@@ -110,8 +148,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chocolate2x2
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5422883589433911888, guid: 885b003b1de77a141818098eccdcb06a, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -119,10 +156,5 @@ PrefabInstance:
 --- !u!4 &3305260234464583266 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5016741325962708826, guid: 885b003b1de77a141818098eccdcb06a, type: 3}
-  m_PrefabInstance: {fileID: 7512478120268257592}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &5453063502441069489 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 2588588269845242505, guid: 885b003b1de77a141818098eccdcb06a, type: 3}
   m_PrefabInstance: {fileID: 7512478120268257592}
   m_PrefabAsset: {fileID: 0}

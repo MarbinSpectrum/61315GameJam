@@ -1,21 +1,28 @@
-using System;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Chocolate : MonoBehaviour
 {
     [SerializeField] private Rigidbody rigidbody;
-    
+
     // --------------------------------------------------
     // Variables
     // --------------------------------------------------
+    // ----- Const
+    private const float VIBRATION_SCALE = 0.05f;
+    private const float VIBRATION_TIME = 0.1f;
+    private const float RESET_TIME = 0.5f;
+    
+    // ----- Normal
+    private Vector3 _vibrationVector = new(VIBRATION_SCALE, VIBRATION_SCALE, 0);
     private Vector3 _originPos;
+    private Vector3 _originRot;
+    private Vector3 _originScale;
     private BlockData _data;
     private Vector3 _offset;
     private float _mouseZCoord;
     private bool _isDragging = false;
-    
+
     // --------------------------------------------------
     // Functions - Event
     // --------------------------------------------------
@@ -26,7 +33,7 @@ public class Chocolate : MonoBehaviour
         _isDragging = true;
         rigidbody.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
     }
-    
+
     private void OnMouseDrag()
     {
         // TODO : 적합하지 않은 이터 -> 초콜릿 원위치 및 애니메이션 연출
@@ -57,6 +64,7 @@ public class Chocolate : MonoBehaviour
         }
     }
 
+
     // --------------------------------------------------
     // Functions - Normal
     // --------------------------------------------------
@@ -67,28 +75,39 @@ public class Chocolate : MonoBehaviour
         var y = data.row;
         transform.position = new Vector3(x, -y + 2, 0);
         _originPos = transform.position;
+        _originRot = transform.eulerAngles;
+        _originScale = transform.localScale;
     }
-    
+
     private Vector3 GetMouseWorldPos()
     {
         var mousePoint = Input.mousePosition;
         mousePoint.z = _mouseZCoord;
+        if (Camera.main == null)
+        {
+            Debug.LogError("[Chocolate] GetMouseWorldPos : Camera.main is null");
+            return Vector3.zero;
+        }
+        
         return Camera.main.ScreenToWorldPoint(mousePoint);
+        
     }
 
     private void ResetPosition()
     {
-        var scaleVec = new Vector3(0.05f, 0.05f, 0);
-        transform.DOMove(_originPos, 0.5f);
-        transform.DOShakeScale(0.2f, scaleVec, 10, 0f).OnComplete(() =>
-        {
-            transform.DOScale(Vector3.one / 2f, 0.1f); 
-        });
-        // transform.DOShakeRotation(0.5f);
+        transform.DOMove(_originPos, RESET_TIME);
+        OnVibration();
     }
-
+    
     private void OnVibration()
     {
-        // TODO : 띠용 연출
+        transform.DOShakeScale(VIBRATION_TIME, _vibrationVector, 10, 0f).OnComplete(() =>
+        {
+            transform.DOScale(_originScale, VIBRATION_TIME);
+        });
+        transform.DOShakeRotation(VIBRATION_TIME, _vibrationVector, 10, 0f).OnComplete(() =>
+        {
+            transform.DORotate(_originRot, VIBRATION_TIME);
+        });
     }
 }
