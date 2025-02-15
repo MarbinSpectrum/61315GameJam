@@ -46,6 +46,7 @@ public class GameManager
         Debug.Log($"[GameManager] CreateStage : {StageNumber}");
         Managers.Map.CreateMap(StageNumber);
         Managers.Chocolate.SetChocolates(StageNumber);
+        Managers.Chocolate.ClearMelt();
         Managers.Eater.SetEaters(StageNumber);
         
         var mapData = Managers.Data.GetMapData(StageNumber);
