@@ -23,10 +23,24 @@ public class EaterControl : MonoBehaviour
     private Vector3 basePosition;
     private const int EAT_CNT = 4;
     private IEnumerator eatCor;
+    [SerializeField] private Vector2 offset;
     [SerializeField] private float eatAniSpeed = 0.5f;
     
     public void SetEater(int x,int y,int n,int m,EDirection dir,EColor color)
     {
+        Vector2 newOffset = offset;
+        if(dir == EDirection.Up)
+            newOffset  = Quaternion.Euler(0f,0f,0f)*offset;
+        else if(dir == EDirection.Down)
+            newOffset  = Quaternion.Euler(0f,0f,180f)*offset;    
+        else  if(dir == EDirection.Left)
+            newOffset  = Quaternion.Euler(0f,0f,-90f)*offset;
+        else if(dir == EDirection.Right)
+            newOffset  = Quaternion.Euler(0f,0f,90f)*offset;    
+        
+        int newX = x + (int)newOffset.x;
+        int newY = y + (int)newOffset.y;
+        
         if (getBasePos == false)
         {
             getBasePos = true;
@@ -47,9 +61,9 @@ public class EaterControl : MonoBehaviour
         
         if (dir == Define.EDirection.Right)
         {
-            if (y == n)
+            if (newY == n)
                 table[2].SetActive(true);
-            else if (y == 1)
+            else if (newY == 1)
                 table[0].SetActive(true);
             else
                 table[1].SetActive(true);
@@ -57,9 +71,9 @@ public class EaterControl : MonoBehaviour
         }
         else if (dir == Define.EDirection.Left)
         {
-            if (y == n)
+            if (newY == n)
                 table[0].SetActive(true);
-            else if (y == 1)
+            else if (newY == 1)
                 table[2].SetActive(true);
             else
                 table[1].SetActive(true);
@@ -67,9 +81,9 @@ public class EaterControl : MonoBehaviour
         }
         else if (dir == Define.EDirection.Up)
         {
-            if (x == 1)
+            if (newX == 1)
                 table[0].SetActive(true);
-            else if (x == m)
+            else if (newX == m)
                 table[2].SetActive(true);
             else
                 table[1].SetActive(true);
@@ -77,9 +91,9 @@ public class EaterControl : MonoBehaviour
         }
         else if (dir == Define.EDirection.Down)
         {
-            if (x == 1)
+            if (newX == 1)
                 table[2].SetActive(true);
-            else if (x == m)
+            else if (newX == m)
                 table[0].SetActive(true);
             else
                 table[1].SetActive(true);
