@@ -37,7 +37,7 @@ public class GameManager
         Score = 0;
         Timer = 0;
         CurrentTimer = 0;
-        StageNumber = 1;
+        StageNumber = 2;
         _cameraBasePos = Camera.main.transform.position;
     }
 
@@ -57,7 +57,8 @@ public class GameManager
         if (Camera.main != null)
         {
             Camera.main.transform.position = _cameraBasePos;
-            Camera.main.transform.position += new Vector3(mapData.M / 2f + 1f, -0.5f,0f);
+            float addZPos = Mathf.Max(mapData.M, mapData.N)*0.8f;
+            Camera.main.transform.position += new Vector3(mapData.M / 2f + 1f, -0.5f,-addZPos);
         }
         
         SetCoroutines();
