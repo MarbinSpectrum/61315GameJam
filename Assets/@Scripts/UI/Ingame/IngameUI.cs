@@ -15,7 +15,7 @@ public class IngameUI : MonoBehaviour
 
     private void Start()
     {
-        SafeArea.SetSafeArea(uiRect);
+        //SafeArea.SetSafeArea(uiRect);
     }
 
     private void Update()
