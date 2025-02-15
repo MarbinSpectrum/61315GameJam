@@ -5147,6 +5147,7 @@ MonoBehaviour:
   skinnedMeshRenderers:
   - {fileID: 5195805902457033955}
   - {fileID: 186420254607998241}
+  offset: {x: 0, y: 0}
   eatAniSpeed: 1.35
 --- !u!1 &1095077388197810099
 GameObject:
@@ -21487,6 +21488,7 @@ MonoBehaviour:
   skinnedMeshRenderers:
   - {fileID: 5697039345035564574}
   - {fileID: 1650143504836601753}
+  offset: {x: 1, y: 0}
   eatAniSpeed: 1.35
 --- !u!1 &7126030287497033342
 GameObject:

@@ -39,6 +39,7 @@ public class ChocolateManager
         if (_chocolateList.Count != 0) 
             return;
         
+        Managers.Game.StopGame();
         Managers.UI.ShowPopupUI<SuccessPopup>();
     }
 

@@ -98,6 +98,16 @@ public class GameManager
         
         Managers.UI.ShowPopupUI<UI_Popup>("FailPopup");
     }
+
+    public void StopGame()
+    {
+        //타이머가 멈춤
+        if (_timeCor != null)
+        {
+            CoroutineHelper.StopCoroutine(_timeCor);
+            _timeCor = null;
+        }
+    }
     
     private IEnumerator MeltingCor()
     {
