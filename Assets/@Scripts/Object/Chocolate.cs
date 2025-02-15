@@ -19,7 +19,7 @@ public class Chocolate : MonoBehaviour
     private const float RESET_TIME = 0.5f;
     private const float EATEN_MOVE_TIME = 0.2f;
     private const float MELTING_SCALE_PERCENT = 0.08f;
-    private const float DRAG_THRESHOLD = 200f;
+    private const float DRAG_THRESHOLD = 100f;
     private const float MOVE_SPEED = 10f;
     private const float MAX_RAY_DISTANCE = 50f;
     
@@ -117,34 +117,7 @@ public class Chocolate : MonoBehaviour
     {
         if (other.gameObject.CompareTag(Define.ETagType.Chocolate.ToString()))
         {
-            _isMoving = false;
-
-            var moveAmount = 0.5f;
-            var type = _data.blockType;
-            var dir = _data.dir;
-            if ((type == Define.EBlockType.Chocolate2 && dir is Define.EDirection.Up or Define.EDirection.Down) ||
-                     (type == Define.EBlockType.Chocolate3 && dir is Define.EDirection.Left or Define.EDirection.Right) ||
-                     type == Define.EBlockType.Chocolate4)
-            {
-                moveAmount = 0f;
-            }
-            
-            var targetPos = transform.position;
-            var isX = _moveDirection.x != 0;
-            var isY = _moveDirection.y != 0;
-            var sign = (_moveDirection.x > 0 || _moveDirection.y > 0) ? 1 : -1;
-            if (isX)
-            {
-                targetPos.x = (sign > 0) ? Mathf.Floor(targetPos.x) : Mathf.CeilToInt(targetPos.x);
-                targetPos.x += sign * moveAmount;
-            }
-            if (isY)
-            {
-                targetPos.y = (sign > 0) ? Mathf.Floor(targetPos.y) : Mathf.CeilToInt(targetPos.y);
-                targetPos.y += sign * moveAmount;
-            }
-            
-            transform.DOMove(targetPos, RESET_TIME);
+            OnReset();
             OnVibration();
         }
         else if (other.gameObject.CompareTag(Define.ETagType.Eater.ToString()))
@@ -152,6 +125,14 @@ public class Chocolate : MonoBehaviour
             if (!other.gameObject.TryGetComponent(out Eater eater))
             {
                 Debug.LogError("[Chocolate] OnCollisionEnter : Eater 컴포넌트가 없습니다.");
+                return;
+            }
+
+            if (_data.color != eater._data.color)
+            {
+                
+                OnReset();
+                OnVibration();
                 return;
             }
 
@@ -198,7 +179,39 @@ public class Chocolate : MonoBehaviour
             _originScale = transChocolateChild.localScale;
         });
     }
-    
+
+    private void OnReset()
+    {
+        _isMoving = false;
+
+        var moveAmount = 0.5f;
+        var type = _data.blockType;
+        var dir = _data.dir;
+        if ((type == Define.EBlockType.Chocolate2 && dir is Define.EDirection.Up or Define.EDirection.Down) ||
+            (type == Define.EBlockType.Chocolate3 && dir is Define.EDirection.Left or Define.EDirection.Right) ||
+            type == Define.EBlockType.Chocolate4)
+        {
+            moveAmount = 0f;
+        }
+            
+        var targetPos = transform.position;
+        var isX = _moveDirection.x != 0;
+        var isY = _moveDirection.y != 0;
+        var sign = (_moveDirection.x > 0 || _moveDirection.y > 0) ? 1 : -1;
+        if (isX)
+        {
+            targetPos.x = (sign > 0) ? Mathf.Floor(targetPos.x) : Mathf.CeilToInt(targetPos.x);
+            targetPos.x += sign * moveAmount;
+        }
+        if (isY)
+        {
+            targetPos.y = (sign > 0) ? Mathf.Floor(targetPos.y) : Mathf.CeilToInt(targetPos.y);
+            targetPos.y += sign * moveAmount;
+        }
+            
+        transform.DOMove(targetPos, RESET_TIME);
+    }
+
     private void OnVibration()
     {
         transChocolateChild.DOShakeScale(VIBRATION_TIME, _vibrationScaleVector, 10, 0f).OnComplete(() =>
