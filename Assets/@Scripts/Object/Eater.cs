@@ -92,6 +92,7 @@ public class Eater : MonoBehaviour
 
     public void ChangeState(Define.EEaterState state)
     {
+        // 깃액션 테스트
         if (_currentState == state)
             return;
 
