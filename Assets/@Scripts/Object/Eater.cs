@@ -1,5 +1,5 @@
+using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Eater : MonoBehaviour
 {
@@ -15,8 +15,13 @@ public class Eater : MonoBehaviour
     // --------------------------------------------------
     // Variables
     // --------------------------------------------------
+    // ----- Const
+    private const float ANIMATION_INTERVAL = 0.5f;
+    // ----- Normal
     public BlockData _data { get; private set; }
-    private Animation nowChObj;
+    private Animation _animationCurrentCharactor;
+    private Define.EEaterState _previousState = Define.EEaterState.Idle;
+    private Define.EEaterState _currentState = Define.EEaterState.Idle;
 
     // --------------------------------------------------
     // Functions
@@ -32,8 +37,8 @@ public class Eater : MonoBehaviour
             obj.gameObject.SetActive(false);
 
         int randomIdx = Random.Range(0, characterAniObj.Length);
-        nowChObj = characterAniObj[randomIdx];
-        nowChObj.gameObject.SetActive(true);
+        _animationCurrentCharactor = characterAniObj[randomIdx];
+        _animationCurrentCharactor.gameObject.SetActive(true);
 
         foreach (var obj in table)
             obj.SetActive(false);
@@ -83,23 +88,48 @@ public class Eater : MonoBehaviour
                 table[1].SetActive(true);
 
         }
-
-
     }
 
-    public void OnEat()
+    public void ChangeState(Define.EEaterState state)
     {
-        nowChObj.Play("Eat");
+        if (_currentState == state)
+            return;
+
+        _previousState = _currentState;
+        _currentState = state;
+
+        switch (state)
+        {
+            case Define.EEaterState.Eat:
+                OnEat();
+                break;
+            case Define.EEaterState.Angry:
+                OnAngry();
+                break;
+            case Define.EEaterState.Nice:
+                OnNice();
+                break;
+        }
+
+        DOVirtual.DelayedCall(ANIMATION_INTERVAL, () =>
+        {
+            _previousState = _currentState;
+            _currentState = Define.EEaterState.Idle;
+        });
     }
 
-    public void OnAngry()
+    private void OnEat()
+    {
+        _animationCurrentCharactor.Play();
+    }
+
+    private void OnAngry()
     {
         angryEmoji.Play();
     }
 
-    public void OnNice()
+    private void OnNice()
     {
         owoEmoji.Play();
     }
-
 }

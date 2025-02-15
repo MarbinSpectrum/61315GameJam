@@ -63,4 +63,12 @@ public static class Define
         Chocolate,
         Eater,
     }
+    
+    public enum EEaterState
+    {
+        Idle,
+        Eat,
+        Angry,
+        Nice,
+    }
 }

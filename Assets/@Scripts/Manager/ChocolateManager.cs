@@ -26,6 +26,12 @@ public class ChocolateManager
         }
     }
     
+    public void DestroyChocolate(Chocolate chocolate)
+    {
+        _chocolateList.Remove(chocolate);
+        Object.Destroy(chocolate.gameObject);
+    }
+    
     private void InstantiateChocolate(BlockData data)
     {
         var objectChocolate = Resources.Load<GameObject>(data.blockType.ToString());
