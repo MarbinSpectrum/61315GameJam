@@ -5,7 +5,7 @@ public class EaterManager
 {
     private List<BlockData> _eaterData = null;
     private List<Eater> _eaterList = new();
-    private Dictionary<Vector2Int, Eater> _eaterDictionary = new();
+    private Dictionary<int, Eater> _eaterDictionary = new();
     
     public void Init()
     {
@@ -35,18 +35,17 @@ public class EaterManager
         var eater = Object.Instantiate(objectChocolate).GetComponent<Eater>();
         eater.Init(data,n,m);
         
-        _eaterDictionary.Add(new Vector2Int(data.row,data.col),eater);
+        _eaterDictionary.Add(data.idx ,eater);
         _eaterList.Add(eater);
     }
 
-    public Eater GetEater(int row, int col)
+    public Eater GetEater(int pIdx)
     {
-        Vector2Int key = new Vector2Int(row, col);
-        if (_eaterDictionary.ContainsKey(key) == false)
+        if (_eaterDictionary.ContainsKey(pIdx) == false)
         {
-            Debug.LogError($"[EaterManager] GetEater() : {row},{col}에 해당하는 Eater가 없습니다.");
+            Debug.LogError($"[EaterManager] GetEater() : {pIdx}에 해당하는 Eater가 없습니다.");
             return null;
         }
-        return _eaterDictionary[key];
+        return _eaterDictionary[pIdx];
     }
 }

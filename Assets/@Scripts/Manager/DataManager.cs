@@ -56,7 +56,7 @@ public class DataManager
                 values[c] = values[c].Replace('\r', ' ').Trim();
             
             int stageNum = int.Parse(values[0]);
-            
+            int idx = int.Parse(values[1]);
             int row = int.Parse(values[2]);
             int col = int.Parse(values[3]);
             int unitType = int.Parse(values[4]);
@@ -69,9 +69,9 @@ public class DataManager
                 eaterBlocks.Add(stageNum, new List<BlockData>());
             
             if((EBlockType)unitType == EBlockType.Eater)
-                eaterBlocks[stageNum].Add(new BlockData(row,col,unitType,blockColor,blockDir));
+                eaterBlocks[stageNum].Add(new BlockData(idx,row,col,unitType,blockColor,blockDir));
             else
-                chocolateBlocks[stageNum].Add(new BlockData(row,col,unitType,blockColor,blockDir));
+                chocolateBlocks[stageNum].Add(new BlockData(idx,row,col,unitType,blockColor,blockDir));
         }
     }
     

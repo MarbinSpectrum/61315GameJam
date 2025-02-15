@@ -5,6 +5,7 @@ using static Define;
 
 public class BlockData
 {
+    public readonly int idx;
     public readonly int row; //세로
     public readonly int col; //가로
     public readonly EBlockType blockType; //블록종류
@@ -13,8 +14,9 @@ public class BlockData
     
     public BlockData(){}
     
-    public BlockData(int pRow, int pCol, int pBlockType,int pColor,int pDir)
+    public BlockData(int pIdx, int pRow, int pCol, int pBlockType,int pColor,int pDir)
     {
+        idx = pIdx;
         row = pRow;
         col = pCol;
         blockType = (EBlockType)pBlockType;
