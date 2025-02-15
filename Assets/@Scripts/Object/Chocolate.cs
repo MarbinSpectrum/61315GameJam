@@ -98,14 +98,14 @@ public class Chocolate : MonoBehaviour
         transform.position = new Vector3(x, -y + 2, 0);
         
         ResetPivot();
+        SetArrowRotation();
+        SetPoint();
         
         _originPos = transform.position;
         _originRot = transform.eulerAngles;
         _originScale = transform.localScale;
         
         _meltingScaleVector = new Vector3(_originScale.x * MELTING_SCALE_PERCENT, _originScale.y * MELTING_SCALE_PERCENT, 0);
-        
-        SetPoint();
     }
 
     public void OnMelting()
@@ -187,5 +187,15 @@ public class Chocolate : MonoBehaviour
         transform.position = pos;
         transChocolateChild.localPosition = Vector3.zero;
         collider.center = Vector3.zero;
+    }
+
+    private void SetArrowRotation()
+    {
+        if (_data.dir == Define.EDirection.Up || _data.dir == Define.EDirection.Down)
+        {
+            var rot = transform.rotation.eulerAngles;
+            rot.z = 90;
+            transform.rotation = Quaternion.Euler(rot);
+        }
     }
 }
