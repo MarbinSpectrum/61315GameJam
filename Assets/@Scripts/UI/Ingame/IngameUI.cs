@@ -36,6 +36,6 @@ public class IngameUI : MonoBehaviour
         int stage = Managers.Game.stageNum;
         nowStageText.text = $"Stage {stage}";
         
-        limitTimeText.text = $"Limit Time: {limitTime}";
+        limitTimeText.text = $"{limitTime}";
     }
 }
