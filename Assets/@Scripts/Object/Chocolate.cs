@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
@@ -22,6 +23,7 @@ public class Chocolate : MonoBehaviour
     private const float DRAG_THRESHOLD = 100f;
     private const float MOVE_SPEED = 10f;
     private const float MAX_RAY_DISTANCE = 50f;
+    private const float MOVE_WAIT_TIME = 0.5f;
     
     // ----- Normal
     private Vector3 _vibrationScaleVector = new(VIBRATION_SCALE, VIBRATION_SCALE, 0);
@@ -36,7 +38,8 @@ public class Chocolate : MonoBehaviour
     private Vector3 _moveDirection;
     private bool _isDragging = false;
     private bool _isMoving = false;
-    
+    private WaitForSeconds _moveWaitTime = new(MOVE_WAIT_TIME);
+
     private Vector3 _offset;
     private float _mouseZCoord;
     private int _chocolatePoint = 1;
@@ -58,9 +61,9 @@ public class Chocolate : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        // TODO : 적합하지 않은 이터 -> 초콜릿 원위치 및 애니메이션 연출
         if (!_isDragging || _isMoving)
             return;
+        
         var dragVector = Input.mousePosition - _dragStartpos;
         var dragDistance = dragVector.magnitude;
 
@@ -76,7 +79,11 @@ public class Chocolate : MonoBehaviour
             
         var x = (Data.dir is Define.EDirection.Left or Define.EDirection.Right) ? Mathf.Cos(angle * Mathf.Deg2Rad) : 0;
         var y = (Data.dir is Define.EDirection.Up or Define.EDirection.Down) ? Mathf.Sin(angle * Mathf.Deg2Rad) : 0;
+
         _moveDirection = new Vector3(x, y, 0).normalized;
+        if (_moveDirection == Vector3.zero)
+            return;
+        
         _isMoving = true;
         _isDragging = false;
     }
@@ -183,6 +190,7 @@ public class Chocolate : MonoBehaviour
     private void OnReset()
     {
         _isMoving = false;
+        _isDragging = false;
 
         var moveAmount = 0.5f;
         var type = Data.blockType;
