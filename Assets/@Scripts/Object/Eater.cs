@@ -25,7 +25,7 @@ public class Eater : MonoBehaviour
         _data = data;
         var x = data.col;
         var y = data.row;
-        transform.position = new Vector3(x, n + 1 - y, 0);
+        transform.position = new Vector3(x + 0.5f, 1.5f - y, 0);
         
         foreach (var obj in chObj)
             obj.SetActive(false);
