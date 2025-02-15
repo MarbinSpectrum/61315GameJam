@@ -14,7 +14,7 @@ public class Eater : MonoBehaviour
     // --------------------------------------------------
     // Variables
     // --------------------------------------------------
-    private BlockData _data;
+    public BlockData _data { get; private set; }
     private GameObject nowChObj;
 
     // --------------------------------------------------
@@ -26,9 +26,6 @@ public class Eater : MonoBehaviour
         var x = data.col;
         var y = data.row;
         transform.position = new Vector3(x, y, 0);
-
-        angryEmoji.gameObject.SetActive(false);
-        owoEmoji.gameObject.SetActive(false);
         
         foreach (var obj in chObj)
             obj.SetActive(false);
@@ -87,20 +84,16 @@ public class Eater : MonoBehaviour
 
     public void OnEat()
     {
-        // TODO : 와그작 애니메이션 재생
         nowChObj.GetComponent<Animation>().Play("Eat");
     }
 
     public void OnAngry()
     {
-        // TODO : 화나는 이모지 연출
-        angryEmoji.gameObject.SetActive(true);
         angryEmoji.GetComponent<ParticleSystem>().Play();
     }
 
     public void OnNice()
     {
-        owoEmoji.gameObject.SetActive(true);
         owoEmoji.GetComponent<ParticleSystem>().Play();
     }
 
