@@ -11,7 +11,7 @@ public class GameManager
     {
         score = 0;
         limitTime = 0;
-        stageNum = 3;
+        stageNum = 1;
     }
 
     public void CreateStage()
@@ -23,6 +23,8 @@ public class GameManager
         var mapData = Managers.Data.GetMapData(stageNum);
 
         if (UnityEngine.Camera.main != null)
-            UnityEngine.Camera.main.transform.position += new Vector3(mapData.M / 2f + 0.5f, mapData.N / 2f + 0.5f, 0);
+            UnityEngine.Camera.main.transform.position += new Vector3(mapData.M / 2f + 1f, -0.5f,0f);
+        
+        
     }
 }

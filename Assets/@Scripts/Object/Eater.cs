@@ -6,6 +6,7 @@ public class Eater : MonoBehaviour
     // --------------------------------------------------
     // Components
     // --------------------------------------------------
+    [SerializeField] private Transform objRotaion;
     [SerializeField] private GameObject angryEmoji;
     [SerializeField] private GameObject owoEmoji;
     [SerializeField] private GameObject[] chObj;
@@ -25,7 +26,7 @@ public class Eater : MonoBehaviour
         _data = data;
         var x = data.col;
         var y = data.row;
-        transform.position = new Vector3(x, n + 1 - y, 0);
+        transform.position = new Vector3(x, 2f - y, 0);
         
         foreach (var obj in chObj)
             obj.SetActive(false);
@@ -39,7 +40,8 @@ public class Eater : MonoBehaviour
 
         if (data.dir == Define.EDirection.Right)
         {
-            transform.rotation = Quaternion.Euler(0, 0, -90);
+            objRotaion.rotation = Quaternion.Euler(0, 0, -90);
+                
             if (y == n)
                 table[2].SetActive(true);
             else if (y == 1)
@@ -49,7 +51,8 @@ public class Eater : MonoBehaviour
         }
         else if (data.dir == Define.EDirection.Left)
         {
-            transform.rotation = Quaternion.Euler(0, 0, +90);
+            objRotaion.rotation = Quaternion.Euler(0, 0, +90);
+            
             if (y == n)
                 table[0].SetActive(true);
             else if (y == 1)
@@ -59,7 +62,8 @@ public class Eater : MonoBehaviour
         }
         else if (data.dir == Define.EDirection.Up)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            objRotaion.transform.rotation = Quaternion.Euler(0, 0, 0);
+            
             if (x == 1)
                 table[0].SetActive(true);
             else if (x == m)
@@ -69,7 +73,8 @@ public class Eater : MonoBehaviour
         }
         else if (data.dir == Define.EDirection.Down)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 180);
+            objRotaion.transform.rotation = Quaternion.Euler(0, 0, 180);
+            
             if (x == 1)
                 table[2].SetActive(true);
             else if (x == m)
