@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SafeArea
 {
+    public const float SCREEN_WIDTH = 1080;
+    public const float SCREEN_HEIGHT = 1920;
     public static void SetSafeArea(RectTransform rectTransform)
     {
         Rect safeArea = Screen.safeArea;
@@ -11,12 +13,10 @@ public class SafeArea
         Vector2 maxAnchor = minAnchor + safeArea.size;
         Vector2 newMinPos = minAnchor;
         Vector2 newMaxPos = maxAnchor;
-        float height = Screen.height;
-        float width = Screen.width;
-        
-        if (safeArea.width * height < width * safeArea.height)
+
+        if (safeArea.width * SCREEN_HEIGHT < SCREEN_WIDTH * safeArea.height)
         {
-            float newHeight = safeArea.width * (height / width);
+            float newHeight = safeArea.width * (SCREEN_HEIGHT / SCREEN_WIDTH);
 
             float minX = minAnchor.x;
             float minY = minAnchor.y + (safeArea.height - newHeight) / 2.0f;
@@ -29,7 +29,7 @@ public class SafeArea
         }
         else
         {
-            float newWidth = safeArea.height * (width / height);
+            float newWidth = safeArea.height * (SCREEN_WIDTH / SCREEN_HEIGHT);
 
             float minY = minAnchor.y;
             float minX = minAnchor.x + (safeArea.width - newWidth) / 2.0f;
