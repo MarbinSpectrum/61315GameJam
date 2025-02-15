@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Eater : MonoBehaviour
 {
@@ -7,12 +8,9 @@ public class Eater : MonoBehaviour
     // Components
     // --------------------------------------------------
     [SerializeField] private Transform objRotaion;
-    [SerializeField] private ParticleSystem angryEmoji;
-    [SerializeField] private ParticleSystem owoEmoji;
-    [SerializeField] private Animation[] characterAniObj;
-    [SerializeField] private GameObject[] table;
-    [SerializeField] private SkinnedMeshRenderer[] skinnedMeshRenderers;
-
+    [SerializeField] private EaterControl[] eaters;
+    [SerializeField] private BoxCollider boxCollider;
+    
     // --------------------------------------------------
     // Variables
     // --------------------------------------------------
@@ -20,7 +18,6 @@ public class Eater : MonoBehaviour
     private const float ANIMATION_INTERVAL = 0.5f;
     // ----- Normal
     public BlockData _data { get; private set; }
-    private Animation _animationCurrentCharactor;
     private Define.EEaterState _previousState = Define.EEaterState.Idle;
     private Define.EEaterState _currentState = Define.EEaterState.Idle;
     
@@ -28,7 +25,9 @@ public class Eater : MonoBehaviour
     // Properties
     // --------------------------------------------------
     public Vector3 CenterPosition { get; private set; } = Vector3.zero;
-
+    private bool getBaseColliderCenter = false;
+    private Vector2 baseColliderCenter;
+    
     // --------------------------------------------------
     // Functions
     // --------------------------------------------------
@@ -39,63 +38,37 @@ public class Eater : MonoBehaviour
         var y = data.row;
         transform.position = new Vector3(x, 2f - y, 0);
         CenterPosition = objRotaion.position;
-        
-        foreach (var obj in characterAniObj)
-            obj.gameObject.SetActive(false);
 
-        int randomIdx = Random.Range(0, characterAniObj.Length);
-        _animationCurrentCharactor = characterAniObj[randomIdx];
-        _animationCurrentCharactor.gameObject.SetActive(true);
-
-        foreach (var obj in table)
-            obj.SetActive(false);
-
-        SetColor(); 
+        if (getBaseColliderCenter == false)
+        {
+            getBaseColliderCenter = true;
+            baseColliderCenter = boxCollider.center;
+        }
         
         if (data.dir == Define.EDirection.Right)
         {
             objRotaion.rotation = Quaternion.Euler(0, 0, -90);
-                
-            if (y == n)
-                table[2].SetActive(true);
-            else if (y == 1)
-                table[0].SetActive(true);
-            else
-                table[1].SetActive(true);
+            boxCollider.center = baseColliderCenter + new Vector2(0, 1f);
         }
         else if (data.dir == Define.EDirection.Left)
         {
             objRotaion.rotation = Quaternion.Euler(0, 0, +90);
+            boxCollider.center = baseColliderCenter + new Vector2(-1, 0);
             
-            if (y == n)
-                table[0].SetActive(true);
-            else if (y == 1)
-                table[2].SetActive(true);
-            else
-                table[1].SetActive(true);
         }
         else if (data.dir == Define.EDirection.Up)
         {
             objRotaion.transform.rotation = Quaternion.Euler(0, 0, 0);
-            
-            if (x == 1)
-                table[0].SetActive(true);
-            else if (x == m)
-                table[2].SetActive(true);
-            else
-                table[1].SetActive(true);
+            boxCollider.center = baseColliderCenter + new Vector2(0, 0f);
         }
         else if (data.dir == Define.EDirection.Down)
         {
             objRotaion.transform.rotation = Quaternion.Euler(0, 0, 180);
-            
-            if (x == 1)
-                table[2].SetActive(true);
-            else if (x == m)
-                table[0].SetActive(true);
-            else
-                table[1].SetActive(true);
+            boxCollider.center = baseColliderCenter + new Vector2(-1, 1f);
         }
+        
+        foreach (var obj in eaters)
+            obj.SetEater(x,y,n,m,data.dir,data.color);
     }
 
     public void ChangeState(Define.EEaterState state)
@@ -129,30 +102,21 @@ public class Eater : MonoBehaviour
 
     private void OnEat()
     {
-        _animationCurrentCharactor.Play();
+        foreach (var eater in eaters)
+            eater.OnEat();
+        Managers.Sound.Play("Cb_Eat",Define.ESoundType.EFFECT);
     }
 
     private void OnAngry()
     {
-        angryEmoji.Play();
+        foreach (var eater in eaters)
+            eater.OnAngry();
+        Managers.Sound.Play("Cb_Hit",Define.ESoundType.EFFECT);
     }
 
     private void OnNice()
     {
-        owoEmoji.Play();
-    }
-
-    private void SetColor()
-    {
-        var colorIndex = _data.color;
-        var materialColor = Resources.Load<Material>($"Materials/{colorIndex}");
-        if (materialColor == null)
-        {
-            Debug.LogError($"[Chocolate] SetColor : {colorIndex} Material not exists");
-            return;
-        }
-        
-        foreach (var mesh in skinnedMeshRenderers)
-            mesh.material = materialColor;
+        foreach (var eater in eaters)
+            eater.OnNice();
     }
 }

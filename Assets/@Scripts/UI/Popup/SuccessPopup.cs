@@ -15,6 +15,8 @@ public class SuccessPopup : UI_Popup
   {
       base.Init();
 
+      Managers.Sound.Play("Cb_Success",Define.ESoundType.EFFECT);
+      
       var mapData = Managers.Data.GetMapData(Managers.Game.StageNumber + 1);
       if (mapData == null)
       {
