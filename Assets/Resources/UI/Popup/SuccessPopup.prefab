@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75091a21a9dc3e34ebeee36eef107744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCloseDim: 1
+  isCloseDim: 0
   isPlaySound: 0
   isPlayAnimation: 1
   frame: {fileID: 3706101329644099727}

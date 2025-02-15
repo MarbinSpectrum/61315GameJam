@@ -37,7 +37,7 @@ public class GameManager
         Score = 0;
         Timer = 0;
         CurrentTimer = 0;
-        StageNumber = 2;
+        StageNumber = 1;
         _cameraBasePos = Camera.main.transform.position;
     }
 

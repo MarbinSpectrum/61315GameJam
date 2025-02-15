@@ -35,6 +35,11 @@ public class ChocolateManager
     {
         _chocolateList.Remove(chocolate);
         Object.Destroy(chocolate.gameObject);
+        
+        if (_chocolateList.Count != 0) 
+            return;
+        
+        Managers.UI.ShowPopupUI<SuccessPopup>();
     }
 
     public void OnMeltingChocolates()
