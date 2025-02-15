@@ -37,7 +37,6 @@ public class Eater : MonoBehaviour
         var x = data.col;
         var y = data.row;
         transform.position = new Vector3(x, 2f - y, 0);
-        CenterPosition = eaters[0].transform.position;
 
         if (getBaseColliderCenter == false)
         {
@@ -54,7 +53,6 @@ public class Eater : MonoBehaviour
         {
             objRotaion.rotation = Quaternion.Euler(0, 0, +90);
             boxCollider.center = baseColliderCenter + new Vector2(-1, 0);
-            
         }
         else if (data.dir == Define.EDirection.Up)
         {
@@ -69,6 +67,16 @@ public class Eater : MonoBehaviour
         
         foreach (var obj in eaters)
             obj.SetEater(x,y,n,m,data.dir,data.color);
+
+        CalculateCenterPos();
+    }
+
+    private void CalculateCenterPos()
+    {
+        CenterPosition = Vector3.zero;
+        foreach (var eater in eaters)
+            CenterPosition += eater.transform.position;
+        CenterPosition /= eaters.Length;
     }
 
     public void ChangeState(Define.EEaterState state)

@@ -68,11 +68,23 @@ public class DataManager
             if(eaterBlocks.ContainsKey(stageNum) == false)
                 eaterBlocks.Add(stageNum, new List<BlockData>());
             
-            if((EBlockType)unitType == EBlockType.Eater1)
+            if(IsEaterBlock((EBlockType)unitType))
                 eaterBlocks[stageNum].Add(new BlockData(idx,row,col,unitType,blockColor,blockDir));
             else
                 chocolateBlocks[stageNum].Add(new BlockData(idx,row,col,unitType,blockColor,blockDir));
         }
+    }
+
+    private bool IsEaterBlock(EBlockType pEBlockType)
+    {
+        switch (pEBlockType)
+        {
+            case EBlockType.Eater1:
+            case EBlockType.Eater2:
+            return true;
+        }
+
+        return false;
     }
     
     private void LoadMapDatas(string pFilePath)
