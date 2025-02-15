@@ -7,11 +7,13 @@ public class GameManager
     public int limitTime = 0;
     public int stageNum = 1;
     private Coroutine timeCor;
+    private Vector3 cameraBasePos;
     
     public void Init()
     {
         limitTime = 0;
         stageNum = 1;
+        cameraBasePos = Camera.main.transform.position;
     }
 
     public void CreateStage()
@@ -23,9 +25,12 @@ public class GameManager
         
         var mapData = Managers.Data.GetMapData(stageNum);
         limitTime = mapData.limitTime;
-        
+
         if (Camera.main != null)
+        {
+            Camera.main.transform.position = cameraBasePos;
             Camera.main.transform.position += new Vector3(mapData.M / 2f + 1f, -0.5f,0f);
+        }
 
         CoroutineHelper.Init();
         if (timeCor != null)
@@ -45,5 +50,8 @@ public class GameManager
             limitTime--;
             yield return new WaitForSeconds(1);
         }
+        
+        //타이머가 끝남 게임오버임
+        Managers.UI.ShowPopupUI<UI_Popup>("FailPopup");
     }
 }
