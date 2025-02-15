@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class FailPopup : UI_Popup
 {
-
+    public override void ClosePopupUI()
+    {
+        base.ClosePopupUI();
+        Managers.Game.CreateStage();
+    }
 }
