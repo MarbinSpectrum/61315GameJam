@@ -4,6 +4,8 @@ using UnityEngine;
 public class Chocolate : MonoBehaviour
 {
     [SerializeField] private Rigidbody rigidbody;
+    [SerializeField] private BoxCollider collider;
+    [SerializeField] private Transform transChocolateChild;
 
     // --------------------------------------------------
     // Variables
@@ -95,6 +97,8 @@ public class Chocolate : MonoBehaviour
         var y = data.row;
         transform.position = new Vector3(x, -y + 2, 0);
         
+        ResetPivot();
+        
         _originPos = transform.position;
         _originRot = transform.eulerAngles;
         _originScale = transform.localScale;
@@ -107,7 +111,10 @@ public class Chocolate : MonoBehaviour
     public void OnMelting()
     {
         var targetScale = transform.localScale - _meltingScaleVector;
-        transform.DOScale(targetScale, 0.2f);
+        transform.DOScale(targetScale, 0.2f).OnComplete(() =>
+        {
+            _originScale = transform.localScale;
+        });
     }
 
     private Vector3 GetMouseWorldPos()
@@ -159,5 +166,26 @@ public class Chocolate : MonoBehaviour
             _chocolatePoint = 2;
         else if (_data.blockType == Define.EBlockType.Chocolate4)
             _chocolatePoint = 4;
+    }
+
+    private void ResetPivot()
+    {
+        var weightX = 0.5f;
+        var weightY = 0.5f;
+        if (_data.blockType == Define.EBlockType.Chocolate2)
+            weightY += 0.5f;
+        else if (_data.blockType == Define.EBlockType.Chocolate3)
+            weightX += 0.5f; 
+        else if (_data.blockType == Define.EBlockType.Chocolate4)
+        {
+            weightX += 0.5f;
+            weightY += 0.5f;
+        }
+        var pos = transform.position;
+        pos.x += weightX;
+        pos.y -= weightY;
+        transform.position = pos;
+        transChocolateChild.localPosition = Vector3.zero;
+        collider.center = Vector3.zero;
     }
 }

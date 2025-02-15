@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 1459089409815930609}
+  collider: {fileID: 2185960388362313106}
+  transChocolateChild: {fileID: 8462164653106630717}
 --- !u!65 &2185960388362313106
 BoxCollider:
   m_ObjectHideFlags: 0
