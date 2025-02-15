@@ -16,6 +16,9 @@ public class GameManager
     private Coroutine timeCor;
     private Vector3 cameraBasePos;
     
+    // --------------------------------------------------
+    // Functions
+    // --------------------------------------------------
     public void Init()
     {
         Score = 0;
@@ -48,7 +51,12 @@ public class GameManager
 
         timeCor = CoroutineHelper.StartCoroutine(LimitTimeCor());
     }
-
+    
+    public void IncreaseScore(int num = 1)
+    {
+        Score += num;
+    }
+    
     private IEnumerator LimitTimeCor()
     {
         //타이머가 1초마다 줄어들게 만듬
@@ -60,10 +68,5 @@ public class GameManager
         
         //타이머가 끝남 게임오버임
         Managers.UI.ShowPopupUI<UI_Popup>("FailPopup");
-    }
-    
-    public void IncreaseScore(int num = 1)
-    {
-        Score += num;
     }
 }
