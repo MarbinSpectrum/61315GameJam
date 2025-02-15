@@ -3,8 +3,15 @@ using UnityEngine;
 
 public class GameManager
 {
+    // --------------------------------------------------
+    // Properties
+    // --------------------------------------------------
     public int Score { get; private set; } = 0;
-    public int Timer = 0;
+    public int Timer { get; private set; } = 0;
+    
+    // --------------------------------------------------
+    // Variables
+    // --------------------------------------------------
     public int stageNum = 1;
     private Coroutine timeCor;
     private Vector3 cameraBasePos;
@@ -26,7 +33,6 @@ public class GameManager
         
         var mapData = Managers.Data.GetMapData(stageNum);
         Timer = mapData.limitTime;
-        Timer = 5;
 
         if (Camera.main != null)
         {

@@ -71,4 +71,10 @@ public static class Define
         Angry,
         Nice,
     }
+
+    public enum EDataTableType
+    {
+        block_info,
+        stage_info,
+    }
 }

@@ -15,8 +15,8 @@ public class DataManager
         eaterBlocks ??= new Dictionary<int,List<BlockData>>();
         mapData ??= new Dictionary<int,MapData>();
         
-        LoadBlockDatas("Block_info");
-        LoadMapDatas("Stage_Size");
+        LoadBlockDatas(EDataTableType.block_info.ToString());
+        LoadMapDatas(EDataTableType.stage_info.ToString());
     }
     
     private void LoadBlockDatas(string pFilePath)

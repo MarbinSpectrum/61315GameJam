@@ -98,6 +98,11 @@ public class Chocolate : MonoBehaviour
         SetPoint();
     }
 
+    private void OnMelting()
+    {
+        
+    }
+
     private Vector3 GetMouseWorldPos()
     {
         var mousePoint = Input.mousePosition;
