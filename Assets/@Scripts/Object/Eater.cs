@@ -11,6 +11,7 @@ public class Eater : MonoBehaviour
     [SerializeField] private ParticleSystem owoEmoji;
     [SerializeField] private Animation[] characterAniObj;
     [SerializeField] private GameObject[] table;
+    [SerializeField] private SkinnedMeshRenderer[] skinnedMeshRenderers;
 
     // --------------------------------------------------
     // Variables
@@ -49,6 +50,8 @@ public class Eater : MonoBehaviour
         foreach (var obj in table)
             obj.SetActive(false);
 
+        SetColor(); 
+        
         if (data.dir == Define.EDirection.Right)
         {
             objRotaion.rotation = Quaternion.Euler(0, 0, -90);
@@ -92,7 +95,6 @@ public class Eater : MonoBehaviour
                 table[0].SetActive(true);
             else
                 table[1].SetActive(true);
-
         }
     }
 
@@ -138,5 +140,19 @@ public class Eater : MonoBehaviour
     private void OnNice()
     {
         owoEmoji.Play();
+    }
+
+    private void SetColor()
+    {
+        var colorIndex = _data.color;
+        var materialColor = Resources.Load<Material>($"Materials/{colorIndex}");
+        if (materialColor == null)
+        {
+            Debug.LogError($"[Chocolate] SetColor : {colorIndex} Material not exists");
+            return;
+        }
+        
+        foreach (var mesh in skinnedMeshRenderers)
+            mesh.material = materialColor;
     }
 }

@@ -6,6 +6,7 @@ public class Chocolate : MonoBehaviour
     [SerializeField] private Rigidbody rigidbody;
     [SerializeField] private BoxCollider collider;
     [SerializeField] private Transform transChocolateChild;
+    [SerializeField] private MeshRenderer meshRenderer;
 
     // --------------------------------------------------
     // Variables
@@ -100,6 +101,7 @@ public class Chocolate : MonoBehaviour
         ResetPivot();
         SetArrowRotation();
         SetPoint();
+        SetColor();
         
         _originPos = transform.position;
         _originRot = transform.eulerAngles;
@@ -197,5 +199,18 @@ public class Chocolate : MonoBehaviour
             rot.z = 90;
             transform.rotation = Quaternion.Euler(rot);
         }
+    }
+
+    private void SetColor()
+    {
+        var colorIndex = _data.color;
+        var materialColor = Resources.Load<Material>($"Materials/{colorIndex}");
+        if (materialColor == null)
+        {
+            Debug.LogError($"[Chocolate] SetColor : {colorIndex} Material not exists");
+            return;
+        }
+        
+        meshRenderer.material = materialColor;
     }
 }

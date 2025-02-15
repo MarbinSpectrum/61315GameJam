@@ -50,6 +50,7 @@ MonoBehaviour:
   rigidbody: {fileID: 2985735928849278991}
   collider: {fileID: 5212836447052167955}
   transChocolateChild: {fileID: 55160367375809349}
+  meshRenderer: {fileID: 1191436106206445610}
 --- !u!65 &5212836447052167955
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -163,6 +164,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2885517070181173614, guid: 236d66df33e978d4c8702f64fb00cf89, type: 3}
   m_PrefabInstance: {fileID: 2938759781330252331}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &1191436106206445610 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4053317318001193473, guid: 236d66df33e978d4c8702f64fb00cf89, type: 3}
+  m_PrefabInstance: {fileID: 2938759781330252331}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6864990133308777345
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -193,7 +199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2436b2358bac00d488e4f3c4d7d8e1ad, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2436b2358bac00d488e4f3c4d7d8e1ad, type: 3}
       propertyPath: m_LocalRotation.w
