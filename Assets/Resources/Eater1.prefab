@@ -183,6 +183,7 @@ MonoBehaviour:
   skinnedMeshRenderers:
   - {fileID: 5195805902457033955}
   - {fileID: 186420254607998241}
+  eatAniSpeed: 1.35
 --- !u!1 &1095077388197810099
 GameObject:
   m_ObjectHideFlags: 0

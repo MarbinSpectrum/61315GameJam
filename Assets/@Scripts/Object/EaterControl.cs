@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static Define;
 
@@ -20,6 +21,9 @@ public class EaterControl : MonoBehaviour
     private Animation _animationCurrentCharactor;
     private bool getBasePos = false;
     private Vector3 basePosition;
+    private const int EAT_CNT = 4;
+    private IEnumerator eatCor;
+    [SerializeField] private float eatAniSpeed = 0.5f;
     
     public void SetEater(int x,int y,int n,int m,EDirection dir,EColor color)
     {
@@ -86,6 +90,27 @@ public class EaterControl : MonoBehaviour
     public void OnEat()
     {
         _animationCurrentCharactor.Play();
+        
+        if (eatCor != null)
+        {
+            StopCoroutine(eatCor);
+            eatCor = null;
+        }
+
+        eatCor = EatCor();
+        StartCoroutine(eatCor);
+    }
+
+    private IEnumerator EatCor()
+    {
+        //EAT_CNT만큼 씹는 모션이 나옴
+        for (int i = 0; i < EAT_CNT; i++)
+        {
+            foreach (AnimationState state in _animationCurrentCharactor)
+                state.speed = eatAniSpeed;
+            _animationCurrentCharactor.Play();
+            yield return new WaitWhile(() => _animationCurrentCharactor.isPlaying);
+        }
     }
 
     public void OnAngry()
