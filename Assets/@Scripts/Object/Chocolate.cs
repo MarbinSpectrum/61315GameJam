@@ -19,6 +19,9 @@ public class Chocolate : MonoBehaviour
     private const float RESET_TIME = 0.5f;
     private const float EATEN_MOVE_TIME = 0.2f;
     private const float MELTING_SCALE_PERCENT = 0.08f;
+    private const float DRAG_THRESHOLD = 200f;
+    private const float MOVE_SPEED = 10f;
+    private const float MAX_RAY_DISTANCE = 50f;
     
     // ----- Normal
     private Vector3 _vibrationScaleVector = new(VIBRATION_SCALE, VIBRATION_SCALE, 0);
@@ -29,10 +32,14 @@ public class Chocolate : MonoBehaviour
     private Vector3 _originRot;
     private Vector3 _originScale;
     
+    private Vector3 _dragStartpos;
+    private Vector3 _moveDirection;
+    private bool _isDragging = false;
+    private bool _isMoving = false;
+    
     private BlockData _data;
     private Vector3 _offset;
     private float _mouseZCoord;
-    private bool _isDragging = false;
     private int _chocolatePoint = 1;
 
     // --------------------------------------------------
@@ -40,42 +47,105 @@ public class Chocolate : MonoBehaviour
     // --------------------------------------------------
     private void OnMouseDown()
     {
-        _mouseZCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-        _offset = gameObject.transform.position - GetMouseWorldPos();
+        if (_isMoving)
+            return;
+        
         _isDragging = true;
-        rigidbody.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+        _dragStartpos = Input.mousePosition;
     }
 
     private void OnMouseDrag()
     {
         // TODO : 적합하지 않은 이터 -> 초콜릿 원위치 및 애니메이션 연출
-        if (_isDragging == false)
+        if (!_isDragging || _isMoving)
             return;
         
-        var pos = GetMouseWorldPos() + _offset;
-        pos.z = 0f;
-        if (_data.dir is Define.EDirection.Up or Define.EDirection.Down)
-            pos.x = transform.position.x;
-        else
-            pos.y = transform.position.y;
-        transform.position = pos;
+        var dragVector = Input.mousePosition - _dragStartpos;
+        var dragDistance = dragVector.magnitude;
+
+        if (!(dragDistance >= DRAG_THRESHOLD)) 
+            return;
+        
+        var mainCamera = Camera.main;
+        var worldDragVector = mainCamera.transform.right * dragVector.x + mainCamera.transform.up * dragVector.y;
+        worldDragVector.z = 0;
+            
+        var angle = Mathf.Atan2(worldDragVector.y, worldDragVector.x) * Mathf.Rad2Deg;
+        angle = Mathf.Round(angle / 90f) * 90f;
+            
+        var x = (_data.dir is Define.EDirection.Left or Define.EDirection.Right) ? Mathf.Cos(angle * Mathf.Deg2Rad) : 0;
+        var y = (_data.dir is Define.EDirection.Up or Define.EDirection.Down) ? Mathf.Sin(angle * Mathf.Deg2Rad) : 0;
+        _moveDirection = new Vector3(x, y, 0).normalized;
+
+        var ray = new Ray(transform.position, _moveDirection);
+        if (Physics.Raycast(ray, out _, MAX_RAY_DISTANCE))
+        {
+            _isMoving = true;
+            _isDragging = false;
+        }
     }
 
     private void OnMouseUp()
     {
-        if (_isDragging == false)
+        _isDragging = false;
+    }
+
+    private void Update()
+    {
+        if (!_isMoving) 
             return;
         
-        _isDragging = false;
-        rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-        ResetPosition();
+        var ray = new Ray(transform.position, _moveDirection);
+        if (Physics.Raycast(ray, out var hit, MAX_RAY_DISTANCE))
+        {
+            var distanceToTarget = Vector3.Distance(transform.position, hit.point);
+            var moveAmount = MOVE_SPEED * Time.deltaTime;
+
+            if (moveAmount >= distanceToTarget)
+            {
+                transform.position = hit.point;
+                _isMoving = false;
+            }
+            else
+                transform.position += _moveDirection * moveAmount;
+        }
+        else
+            _isMoving = false;
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag(Define.ETagType.Chocolate.ToString()) && _isDragging)
+        if (other.gameObject.CompareTag(Define.ETagType.Chocolate.ToString()))
         {
-            OnMouseUp();
+            _isMoving = false;
+
+            var moveAmount = 0.5f;
+            var type = _data.blockType;
+            var dir = _data.dir;
+            if ((type == Define.EBlockType.Chocolate2 && dir is Define.EDirection.Up or Define.EDirection.Down) ||
+                     (type == Define.EBlockType.Chocolate3 && dir is Define.EDirection.Left or Define.EDirection.Right) ||
+                     type == Define.EBlockType.Chocolate4)
+            {
+                moveAmount = 0f;
+            }
+            
+            var targetPos = transform.position;
+            var isX = _moveDirection.x != 0;
+            var isY = _moveDirection.y != 0;
+            var sign = (_moveDirection.x > 0 || _moveDirection.y > 0) ? 1 : -1;
+            if (isX)
+            {
+                targetPos.x = (sign > 0) ? Mathf.Floor(targetPos.x) : Mathf.CeilToInt(targetPos.x);
+                targetPos.x += sign * moveAmount;
+            }
+            if (isY)
+            {
+                targetPos.y = (sign > 0) ? Mathf.Floor(targetPos.y) : Mathf.CeilToInt(targetPos.y);
+                targetPos.y += sign * moveAmount;
+            }
+            
+            transform.DOMove(targetPos, RESET_TIME);
+            OnVibration();
         }
         else if (other.gameObject.CompareTag(Define.ETagType.Eater.ToString()))
         {
@@ -86,6 +156,15 @@ public class Chocolate : MonoBehaviour
             }
 
             OnEaten(eater);
+        }
+    }
+    
+    private void OnDrawGizmos()
+    {
+        if (_isMoving)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(transform.position, _moveDirection * MAX_RAY_DISTANCE);
         }
     }
     
@@ -106,44 +185,25 @@ public class Chocolate : MonoBehaviour
         
         _originPos = transform.position;
         _originRot = transform.eulerAngles;
-        _originScale = transform.localScale;
+        _originScale = transChocolateChild.localScale;
         
         _meltingScaleVector = new Vector3(_originScale.x * MELTING_SCALE_PERCENT, _originScale.y * MELTING_SCALE_PERCENT, 0);
     }
 
     public void OnMelting()
     {
-        var targetScale = transform.localScale - _meltingScaleVector;
-        transform.DOScale(targetScale, 0.2f).OnComplete(() =>
+        var targetScale = transChocolateChild.localScale - _meltingScaleVector;
+        transChocolateChild.DOScale(targetScale, 0.2f).OnComplete(() =>
         {
-            _originScale = transform.localScale;
+            _originScale = transChocolateChild.localScale;
         });
-    }
-
-    private Vector3 GetMouseWorldPos()
-    {
-        var mousePoint = Input.mousePosition;
-        mousePoint.z = _mouseZCoord;
-        if (Camera.main == null)
-        {
-            Debug.LogError("[Chocolate] GetMouseWorldPos : Camera.main is null");
-            return Vector3.zero;
-        }
-        
-        return Camera.main.ScreenToWorldPoint(mousePoint);
-    }
-
-    private void ResetPosition()
-    {
-        transform.DOMove(_originPos, RESET_TIME);
-        OnVibration();
     }
     
     private void OnVibration()
     {
-        transform.DOShakeScale(VIBRATION_TIME, _vibrationScaleVector, 10, 0f).OnComplete(() =>
+        transChocolateChild.DOShakeScale(VIBRATION_TIME, _vibrationScaleVector, 10, 0f).OnComplete(() =>
         {
-            transform.DOScale(_originScale, VIBRATION_TIME);
+            transChocolateChild.DOScale(_originScale, VIBRATION_TIME);
         });
         transform.DOShakeRotation(VIBRATION_TIME, _vibrationRotationVector, 100, 0f).OnComplete(() =>
         {
