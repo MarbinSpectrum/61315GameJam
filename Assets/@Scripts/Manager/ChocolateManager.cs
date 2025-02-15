@@ -29,6 +29,11 @@ public class ChocolateManager
     private void InstantiateChocolate(BlockData data)
     {
         var objectChocolate = Resources.Load<GameObject>(data.blockType.ToString());
+        if (objectChocolate == null)
+        {
+            Debug.LogError($"[ChocolateManager] InstantiateChocolate : {data.blockType} Prefab not exists");
+            return;
+        }
         var chocolate = Object.Instantiate(objectChocolate).GetComponent<Chocolate>();
         chocolate.Init(data);
         _chocolateList.Add(chocolate);

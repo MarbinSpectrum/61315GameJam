@@ -133,17 +133,23 @@ public class DataManager
 
     public List<BlockData> GetEaterDatas(int pStageNum)
     {
-        //pStageNum에 해당하는 eater블록들 반환
-        List<BlockData> eaters = null;
-        eaterBlocks.TryGetValue(pStageNum, out eaters);
-        return eaters;
+        if (!eaterBlocks.TryGetValue(pStageNum, out var eaterDatas))
+        {
+            Debug.LogError($"[DataManager] GetEaterDatas() : {pStageNum}에 해당하는 먹는 블록이 없습니다.");
+            return null;
+        }
+        
+        return eaterDatas;
     }
 
     public MapData GetMapData(int pStageNum)
     {
-        //pStageNum에 해당하는 Mapdata반환
-        MapData tempMapData = null;
-        mapData.TryGetValue(pStageNum, out tempMapData);
-        return tempMapData;
+        if (!mapData.TryGetValue(pStageNum, out var mapDatas))
+        {
+            Debug.LogError($"[DataManager] GetMapData() : {pStageNum}에 해당하는 맵 데이터가 없습니다.");
+            return null;
+        }
+        
+        return mapDatas;
     }
 }

@@ -65,7 +65,7 @@ public class Chocolate : MonoBehaviour
         _data = data;
         var x = data.col;
         var y = data.row;
-        transform.position = new Vector3(x, y, 0);
+        transform.position = new Vector3(x, -y + 2, 0);
         _originPos = transform.position;
     }
     
