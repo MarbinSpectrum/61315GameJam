@@ -22,6 +22,11 @@ public class Eater : MonoBehaviour
     private Animation _animationCurrentCharactor;
     private Define.EEaterState _previousState = Define.EEaterState.Idle;
     private Define.EEaterState _currentState = Define.EEaterState.Idle;
+    
+    // --------------------------------------------------
+    // Properties
+    // --------------------------------------------------
+    public Vector3 CenterPosition { get; private set; } = Vector3.zero;
 
     // --------------------------------------------------
     // Functions
@@ -32,6 +37,7 @@ public class Eater : MonoBehaviour
         var x = data.col;
         var y = data.row;
         transform.position = new Vector3(x, 2f - y, 0);
+        CenterPosition = objRotaion.position;
         
         foreach (var obj in characterAniObj)
             obj.gameObject.SetActive(false);

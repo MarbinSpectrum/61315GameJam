@@ -150,7 +150,7 @@ public class Chocolate : MonoBehaviour
 
     private void OnEaten(Eater eater)
     {
-        transform.DOMove(eater.transform.position, EATEN_MOVE_TIME).OnComplete(() =>
+        transform.DOMove(eater.CenterPosition, EATEN_MOVE_TIME).OnComplete(() =>
         {
             eater.ChangeState(Define.EEaterState.Eat);
             Managers.Game.IncreaseScore(_chocolatePoint);
