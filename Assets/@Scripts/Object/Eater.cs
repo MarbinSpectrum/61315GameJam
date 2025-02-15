@@ -9,7 +9,7 @@ public class Eater : MonoBehaviour
     [SerializeField] private Transform objRotaion;
     [SerializeField] private ParticleSystem angryEmoji;
     [SerializeField] private ParticleSystem owoEmoji;
-    [SerializeField] private Animation[] chObj;
+    [SerializeField] private Animation[] characterAniObj;
     [SerializeField] private GameObject[] table;
 
     // --------------------------------------------------
@@ -28,11 +28,11 @@ public class Eater : MonoBehaviour
         var y = data.row;
         transform.position = new Vector3(x, 2f - y, 0);
         
-        foreach (var obj in chObj)
+        foreach (var obj in characterAniObj)
             obj.gameObject.SetActive(false);
 
-        int randomIdx = Random.Range(0, chObj.Length);
-        nowChObj = chObj[randomIdx];
+        int randomIdx = Random.Range(0, characterAniObj.Length);
+        nowChObj = characterAniObj[randomIdx];
         nowChObj.gameObject.SetActive(true);
 
         foreach (var obj in table)

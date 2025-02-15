@@ -15518,9 +15518,9 @@ MonoBehaviour:
   objRotaion: {fileID: 7323958860543833232}
   angryEmoji: {fileID: 6139766185192139457}
   owoEmoji: {fileID: 2323883959351094655}
-  chObj:
-  - {fileID: 7712346013288500212}
-  - {fileID: 5722770222299536768}
+  characterAniObj:
+  - {fileID: 2702457380014012441}
+  - {fileID: 163738540212203029}
   table:
   - {fileID: 8567349204905361505}
   - {fileID: 5333234121914584198}
