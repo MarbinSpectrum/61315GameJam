@@ -21,9 +21,9 @@ public class MapManager
         mapGroundList.ForEach((x)=>x.SetActive(false));
 
         int gIdx = 0;
-        for (int y = 0; y < mapData.N; y++)
+        for (int y = 1; y <= mapData.N; y++)
         {
-            for (int x = 0; x < mapData.M; x++)
+            for (int x = 1; x <= mapData.M; x++)
             {
                 GameObject groundObj = mapGroundList[gIdx];
                 groundObj.gameObject.SetActive(true);

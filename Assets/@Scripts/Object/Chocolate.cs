@@ -63,8 +63,8 @@ public class Chocolate : MonoBehaviour
     public void Init(BlockData data)
     {
         _data = data;
-        var x = data.col - 1;
-        var y = data.row - 1;
+        var x = data.col;
+        var y = data.row;
         transform.position = new Vector3(x, y, 0);
         _originPos = transform.position;
     }
