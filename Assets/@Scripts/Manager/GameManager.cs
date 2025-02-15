@@ -38,6 +38,7 @@ public class GameManager
         Timer = 0;
         CurrentTimer = 0;
         StageNumber = 2;
+        // 깃허브 액션 테스트
         _cameraBasePos = Camera.main.transform.position;
     }
 
