@@ -28,12 +28,12 @@ public class IngameUI : MonoBehaviour
         if (Managers.Game == null)
             return;
         
-        int limitTimeValue = Managers.Game.Timer;
+        int limitTimeValue = Managers.Game.CurrentTimer;
         if (limitTimeValue == limitTime)
             return;
         limitTime = limitTimeValue;
         
-        int stage = Managers.Game.stageNum;
+        int stage = Managers.Game.StageNumber;
         nowStageText.text = $"Stage {stage}";
         
         limitTimeText.text = $"{limitTime}";

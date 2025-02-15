@@ -31,6 +31,12 @@ public class ChocolateManager
         _chocolateList.Remove(chocolate);
         Object.Destroy(chocolate.gameObject);
     }
+
+    public void OnMeltingChocolates()
+    {
+        foreach (var chocolate in _chocolateList)
+            chocolate.OnMelting();
+    }
     
     private void InstantiateChocolate(BlockData data)
     {

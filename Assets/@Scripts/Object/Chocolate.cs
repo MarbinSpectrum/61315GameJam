@@ -14,13 +14,17 @@ public class Chocolate : MonoBehaviour
     private const float VIBRATION_TIME = 0.1f;
     private const float RESET_TIME = 0.5f;
     private const float EATEN_MOVE_TIME = 0.2f;
+    private const float MELTING_SCALE_PERCENT = 0.08f;
     
     // ----- Normal
-    private Vector3 _scaleVector = new(VIBRATION_SCALE, VIBRATION_SCALE, 0);
-    private Vector3 _rotationVector = new(VIBRATION_ROTATION, VIBRATION_ROTATION, 0);
+    private Vector3 _vibrationScaleVector = new(VIBRATION_SCALE, VIBRATION_SCALE, 0);
+    private Vector3 _vibrationRotationVector = new(VIBRATION_ROTATION, VIBRATION_ROTATION, 0);
+    private Vector3 _meltingScaleVector;
+    
     private Vector3 _originPos;
     private Vector3 _originRot;
     private Vector3 _originScale;
+    
     private BlockData _data;
     private Vector3 _offset;
     private float _mouseZCoord;
@@ -95,12 +99,15 @@ public class Chocolate : MonoBehaviour
         _originRot = transform.eulerAngles;
         _originScale = transform.localScale;
         
+        _meltingScaleVector = new Vector3(_originScale.x * MELTING_SCALE_PERCENT, _originScale.y * MELTING_SCALE_PERCENT, 0);
+        
         SetPoint();
     }
 
-    private void OnMelting()
+    public void OnMelting()
     {
-        
+        var targetScale = transform.localScale - _meltingScaleVector;
+        transform.DOScale(targetScale, 0.2f);
     }
 
     private Vector3 GetMouseWorldPos()
@@ -124,11 +131,11 @@ public class Chocolate : MonoBehaviour
     
     private void OnVibration()
     {
-        transform.DOShakeScale(VIBRATION_TIME, _scaleVector, 10, 0f).OnComplete(() =>
+        transform.DOShakeScale(VIBRATION_TIME, _vibrationScaleVector, 10, 0f).OnComplete(() =>
         {
             transform.DOScale(_originScale, VIBRATION_TIME);
         });
-        transform.DOShakeRotation(VIBRATION_TIME, _rotationVector, 100, 0f).OnComplete(() =>
+        transform.DOShakeRotation(VIBRATION_TIME, _vibrationRotationVector, 100, 0f).OnComplete(() =>
         {
             transform.DORotate(_originRot, VIBRATION_TIME);
         });
