@@ -7,6 +7,7 @@ public class Managers : SingletonBase<Managers>
     private readonly EaterManager _eaterManager = new();
     private readonly MapManager _mapManager = new();
     private readonly GameManager _gameManager = new();
+    private readonly SoundManager _soundManager = new();
     
     public static UIManager UI => Instance._uiManager;
     public static ToastManager Toast => Instance._toastManager;
@@ -15,4 +16,5 @@ public class Managers : SingletonBase<Managers>
     public static EaterManager Eater => Instance._eaterManager;
     public static MapManager Map => Instance._mapManager;
     public static GameManager Game => Instance._gameManager;
+    public static SoundManager Sound => Instance._soundManager;
 }
