@@ -26,17 +26,18 @@ public class MainScene : MonoBehaviour
         int stageNumber = Managers.Game.StageNumber;
         var mapData = Managers.Data.GetMapData(stageNumber);
         
+        if (background == null)
+        {
+            Debug.LogError($"[MainScene] Awake() : 배경 오브젝트가 없습니다.");
+            return;
+        }
+        
         if (getBackgroundbasePos == false)
         {
             getBackgroundbasePos = true;
             backgroundBasePos = background.transform.position;
         }
 
-        if (background == null)
-        {
-            Debug.LogError($"[MainScene] Awake() : 배경 오브젝트가 없습니다.");
-            return;
-        }
         background.transform.position = backgroundBasePos + new Vector3(mapData.M / 2f + 1f, -0.5f,0);
     }
 }
