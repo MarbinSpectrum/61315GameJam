@@ -61,7 +61,6 @@ public class Chocolate : MonoBehaviour
         // TODO : 적합하지 않은 이터 -> 초콜릿 원위치 및 애니메이션 연출
         if (!_isDragging || _isMoving)
             return;
-        
         var dragVector = Input.mousePosition - _dragStartpos;
         var dragDistance = dragVector.magnitude;
 
@@ -78,13 +77,8 @@ public class Chocolate : MonoBehaviour
         var x = (Data.dir is Define.EDirection.Left or Define.EDirection.Right) ? Mathf.Cos(angle * Mathf.Deg2Rad) : 0;
         var y = (Data.dir is Define.EDirection.Up or Define.EDirection.Down) ? Mathf.Sin(angle * Mathf.Deg2Rad) : 0;
         _moveDirection = new Vector3(x, y, 0).normalized;
-
-        var ray = new Ray(transform.position, _moveDirection);
-        if (Physics.Raycast(ray, out _, MAX_RAY_DISTANCE))
-        {
-            _isMoving = true;
-            _isDragging = false;
-        }
+        _isMoving = true;
+        _isDragging = false;
     }
 
     private void OnMouseUp()
@@ -98,22 +92,8 @@ public class Chocolate : MonoBehaviour
             return;
 
         CanMelting = true;
-        var ray = new Ray(transform.position, _moveDirection);
-        if (Physics.Raycast(ray, out var hit, MAX_RAY_DISTANCE))
-        {
-            var distanceToTarget = Vector3.Distance(transform.position, hit.point);
-            var moveAmount = MOVE_SPEED * Time.deltaTime;
-
-            if (moveAmount >= distanceToTarget)
-            {
-                transform.position = hit.point;
-                _isMoving = false;
-            }
-            else
-                transform.position += _moveDirection * moveAmount;
-        }
-        else
-            _isMoving = false;
+        var moveAmount = MOVE_SPEED * Time.deltaTime;
+        transform.position += _moveDirection * moveAmount;
     }
 
     private void OnCollisionEnter(Collision other)
@@ -134,6 +114,23 @@ public class Chocolate : MonoBehaviour
             if (Data.color != eater._data.color)
             {
                 
+                OnReset();
+                OnVibration();
+                return;
+            }
+
+            var blockType = Data.blockType;
+            var dir = Data.dir;
+            int chocolateSize = 1;
+            if (blockType == Define.EBlockType.Chocolate2 && dir is Define.EDirection.Left or Define.EDirection.Right)
+                chocolateSize = 2;
+            else if (blockType == Define.EBlockType.Chocolate3 && dir is Define.EDirection.Up or Define.EDirection.Down)
+                chocolateSize = 2;
+            else if (blockType == Define.EBlockType.Chocolate4)
+                chocolateSize = 2;
+
+            if (eater._data.blockType != Define.EBlockType.Eater2 && chocolateSize == 2)
+            {
                 OnReset();
                 OnVibration();
                 return;

@@ -159,7 +159,7 @@ public class DataManager
     {
         if (!mapData.TryGetValue(pStageNum, out var mapDatas))
         {
-            Debug.LogError($"[DataManager] GetMapData() : {pStageNum}에 해당하는 맵 데이터가 없습니다.");
+            Debug.LogWarning($"[DataManager] GetMapData() : {pStageNum}에 해당하는 맵 데이터가 없습니다.");
             return null;
         }
         
