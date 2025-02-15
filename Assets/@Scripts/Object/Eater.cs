@@ -37,7 +37,7 @@ public class Eater : MonoBehaviour
         var x = data.col;
         var y = data.row;
         transform.position = new Vector3(x, 2f - y, 0);
-        CenterPosition = objRotaion.position;
+        CenterPosition = eaters[0].transform.position;
 
         if (getBaseColliderCenter == false)
         {
