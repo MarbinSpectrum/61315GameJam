@@ -12,7 +12,10 @@ public class MainScene : MonoBehaviour
         Managers.Data.Init();
         Managers.Map.Init();
         Managers.Chocolate.Init();
+        Managers.Sound.Init();
         
         Managers.Game.CreateStage();
+        
+        Managers.Sound.Play("CB_Bgm",Define.ESoundType.BGM);
     }
 }

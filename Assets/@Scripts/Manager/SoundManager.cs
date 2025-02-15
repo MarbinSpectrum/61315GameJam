@@ -73,7 +73,7 @@ public class SoundManager
     
     public void Play(string path, Define.ESoundType type = Define.ESoundType.EFFECT, float pitch = 1.0f, float volume = 1.0f, bool isLoop = false)
     {
-        var audioClip = Resources.Load<AudioClip>($"Sounds/{path}.mp3");
+        var audioClip = Resources.Load<AudioClip>($"Sounds/{path}");
         if (audioClip == null)
         {
             Debug.Log($"[SoundManager.Play] AudioClip Missing! {path}");

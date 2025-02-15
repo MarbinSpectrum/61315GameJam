@@ -18,7 +18,6 @@ public class Eater : MonoBehaviour
     private const float ANIMATION_INTERVAL = 0.5f;
     // ----- Normal
     public BlockData _data { get; private set; }
-    private Animation _animationCurrentCharactor;
     private Define.EEaterState _previousState = Define.EEaterState.Idle;
     private Define.EEaterState _currentState = Define.EEaterState.Idle;
     
@@ -26,8 +25,8 @@ public class Eater : MonoBehaviour
     // Properties
     // --------------------------------------------------
     public Vector3 CenterPosition { get; private set; } = Vector3.zero;
-    private bool getBaseCenter = false;
-    private Vector2 baseCenter;
+    private bool getBaseColliderCenter = false;
+    private Vector2 baseColliderCenter;
     
     // --------------------------------------------------
     // Functions
@@ -40,32 +39,32 @@ public class Eater : MonoBehaviour
         transform.position = new Vector3(x, 2f - y, 0);
         CenterPosition = objRotaion.position;
 
-        if (getBaseCenter == false)
+        if (getBaseColliderCenter == false)
         {
-            getBaseCenter = true;
-            baseCenter = boxCollider.center;
+            getBaseColliderCenter = true;
+            baseColliderCenter = boxCollider.center;
         }
         
         if (data.dir == Define.EDirection.Right)
         {
             objRotaion.rotation = Quaternion.Euler(0, 0, -90);
-            boxCollider.center = baseCenter + new Vector2(0, 1f);
+            boxCollider.center = baseColliderCenter + new Vector2(0, 1f);
         }
         else if (data.dir == Define.EDirection.Left)
         {
             objRotaion.rotation = Quaternion.Euler(0, 0, +90);
-            boxCollider.center = baseCenter + new Vector2(-1, 0);
+            boxCollider.center = baseColliderCenter + new Vector2(-1, 0);
             
         }
         else if (data.dir == Define.EDirection.Up)
         {
             objRotaion.transform.rotation = Quaternion.Euler(0, 0, 0);
-            boxCollider.center = baseCenter + new Vector2(0, 0f);
+            boxCollider.center = baseColliderCenter + new Vector2(0, 0f);
         }
         else if (data.dir == Define.EDirection.Down)
         {
             objRotaion.transform.rotation = Quaternion.Euler(0, 0, 180);
-            boxCollider.center = baseCenter + new Vector2(-1, 1f);
+            boxCollider.center = baseColliderCenter + new Vector2(-1, 1f);
         }
         
         foreach (var obj in eaters)
@@ -103,13 +102,16 @@ public class Eater : MonoBehaviour
 
     private void OnEat()
     {
-        _animationCurrentCharactor.Play();
+        foreach (var eater in eaters)
+            eater.OnEat();
+        Managers.Sound.Play("Cb_Eat",Define.ESoundType.EFFECT);
     }
 
     private void OnAngry()
     {
         foreach (var eater in eaters)
             eater.OnAngry();
+        Managers.Sound.Play("Cb_Hit",Define.ESoundType.EFFECT);
     }
 
     private void OnNice()

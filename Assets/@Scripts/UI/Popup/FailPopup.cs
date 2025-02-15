@@ -9,4 +9,11 @@ public class FailPopup : UI_Popup
         base.ClosePopupUI();
         Managers.Game.CreateStage();
     }
+    
+    public override void Init()
+    {
+        base.Init();
+
+        Managers.Sound.Play("Cb_Fail",Define.ESoundType.EFFECT);
+    }
 }
