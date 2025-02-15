@@ -51,6 +51,7 @@ MonoBehaviour:
   collider: {fileID: 2185960388362313106}
   transChocolateChild: {fileID: 8462164653106630717}
   meshRenderer: {fileID: 7288100963344608082}
+  transArrow: {fileID: 3442996197775363559}
 --- !u!65 &2185960388362313106
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ public class Chocolate : MonoBehaviour
     [SerializeField] private BoxCollider collider;
     [SerializeField] private Transform transChocolateChild;
     [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private Transform transArrow;
 
     // --------------------------------------------------
     // Variables
@@ -99,7 +100,7 @@ public class Chocolate : MonoBehaviour
         transform.position = new Vector3(x, -y + 2, 0);
         
         ResetPivot();
-        SetArrowRotation();
+        SetArrow();
         SetPoint();
         SetColor();
         
@@ -191,13 +192,26 @@ public class Chocolate : MonoBehaviour
         collider.center = Vector3.zero;
     }
 
-    private void SetArrowRotation()
+    private void SetArrow()
     {
-        if (_data.dir == Define.EDirection.Up || _data.dir == Define.EDirection.Down)
+        if (_data.blockType == Define.EBlockType.Chocolate2)
         {
-            var rot = transform.rotation.eulerAngles;
-            rot.z = 90;
-            transform.rotation = Quaternion.Euler(rot);
+            if (_data.dir is Define.EDirection.Left or Define.EDirection.Right)
+            {
+                var rot = transArrow.rotation.eulerAngles;
+                rot.z = 0;
+                transArrow.rotation = Quaternion.Euler(rot);
+                transArrow.localScale *= 0.5f;
+            }
+        }
+        else
+        {
+            if (_data.dir is Define.EDirection.Up or Define.EDirection.Down)
+            {
+                var rot = transArrow.rotation.eulerAngles;
+                rot.z = 90;
+                transArrow.rotation = Quaternion.Euler(rot);
+            }
         }
     }
 
