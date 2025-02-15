@@ -25,7 +25,7 @@ public class Eater : MonoBehaviour
         _data = data;
         var x = data.col;
         var y = data.row;
-        transform.position = new Vector3(x, y, 0);
+        transform.position = new Vector3(x, n + 1 - y, 0);
         
         foreach (var obj in chObj)
             obj.SetActive(false);
@@ -37,27 +37,27 @@ public class Eater : MonoBehaviour
         foreach (var obj in table)
             obj.SetActive(false);
 
-        if (x == 0)
+        if (data.dir == Define.EDirection.Right)
         {
             transform.rotation = Quaternion.Euler(0, 0, -90);
-            if (y == 1)
+            if (y == n)
                 table[2].SetActive(true);
-            else if (y == n)
+            else if (y == 1)
                 table[0].SetActive(true);
             else
                 table[1].SetActive(true);
         }
-        else if (x == m + 1)
+        else if (data.dir == Define.EDirection.Left)
         {
             transform.rotation = Quaternion.Euler(0, 0, +90);
-            if (y == 1)
+            if (y == n)
                 table[0].SetActive(true);
-            else if (y == n)
+            else if (y == 1)
                 table[2].SetActive(true);
             else
                 table[1].SetActive(true);
         }
-        else if (y == 0)
+        else if (data.dir == Define.EDirection.Up)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
             if (x == 1)
@@ -67,7 +67,7 @@ public class Eater : MonoBehaviour
             else
                 table[1].SetActive(true);
         }
-        else if (y == n + 1)
+        else if (data.dir == Define.EDirection.Down)
         {
             transform.rotation = Quaternion.Euler(0, 0, 180);
             if (x == 1)
