@@ -5153,7 +5153,7 @@ GameObject:
   - component: {fileID: 5858304060128931350}
   - component: {fileID: 903724277656452815}
   m_Layer: 0
-  m_Name: BarSide(Clone)
+  m_Name: right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5329,7 +5329,7 @@ GameObject:
   - component: {fileID: 811038428794690805}
   - component: {fileID: 8167500370207310461}
   m_Layer: 0
-  m_Name: BarMiddle(Clone)
+  m_Name: middle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15516,8 +15516,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objRotaion: {fileID: 7323958860543833232}
-  angryEmoji: {fileID: 6139766185211278519}
-  owoEmoji: {fileID: 2520811364386679781}
+  angryEmoji: {fileID: 6139766185192139457}
+  owoEmoji: {fileID: 2323883959351094655}
   chObj:
   - {fileID: 7712346013288500212}
   - {fileID: 5722770222299536768}
@@ -15830,7 +15830,7 @@ GameObject:
   - component: {fileID: 6040034000295464952}
   - component: {fileID: 873259484902109410}
   m_Layer: 0
-  m_Name: BarSide(Clone) (1)
+  m_Name: left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -7,16 +7,16 @@ public class Eater : MonoBehaviour
     // Components
     // --------------------------------------------------
     [SerializeField] private Transform objRotaion;
-    [SerializeField] private GameObject angryEmoji;
-    [SerializeField] private GameObject owoEmoji;
-    [SerializeField] private GameObject[] chObj;
+    [SerializeField] private ParticleSystem angryEmoji;
+    [SerializeField] private ParticleSystem owoEmoji;
+    [SerializeField] private Animation[] chObj;
     [SerializeField] private GameObject[] table;
 
     // --------------------------------------------------
     // Variables
     // --------------------------------------------------
     public BlockData _data { get; private set; }
-    private GameObject nowChObj;
+    private Animation nowChObj;
 
     // --------------------------------------------------
     // Functions
@@ -29,11 +29,11 @@ public class Eater : MonoBehaviour
         transform.position = new Vector3(x, 2f - y, 0);
         
         foreach (var obj in chObj)
-            obj.SetActive(false);
+            obj.gameObject.SetActive(false);
 
         int randomIdx = Random.Range(0, chObj.Length);
         nowChObj = chObj[randomIdx];
-        nowChObj.SetActive(true);
+        nowChObj.gameObject.SetActive(true);
 
         foreach (var obj in table)
             obj.SetActive(false);
@@ -89,17 +89,17 @@ public class Eater : MonoBehaviour
 
     public void OnEat()
     {
-        nowChObj.GetComponent<Animation>().Play("Eat");
+        nowChObj.Play("Eat");
     }
 
     public void OnAngry()
     {
-        angryEmoji.GetComponent<ParticleSystem>().Play();
+        angryEmoji.Play();
     }
 
     public void OnNice()
     {
-        owoEmoji.GetComponent<ParticleSystem>().Play();
+        owoEmoji.Play();
     }
 
 }
