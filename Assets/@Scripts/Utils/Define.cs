@@ -39,7 +39,8 @@ public static class Define
         Chocolate3 = 3, // 가로 두칸짜리
         Chocolate4 = 4, // 4칸 정사각형 블록
     
-        Eater = 10, // 이터
+        Eater1 = 10, // 이터
+        Eater2 = 11,
     }
 
     public enum EColor
