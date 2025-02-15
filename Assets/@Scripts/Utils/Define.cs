@@ -44,8 +44,12 @@ public static class Define
 
     public enum EColor
     {
-        Red = 1,
-        Blue = 2,
+        Brown = 1,
+        White = 2,
+        Orange = 3,
+        Green = 4,
+        Yellow = 5,
+        Black = 6,
     }
 
     public enum EDirection
