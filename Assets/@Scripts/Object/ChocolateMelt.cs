@@ -41,8 +41,6 @@ public class ChocolateMelt : MonoBehaviour
     {
         meltAnimation.Play();
         yield return new WaitWhile(() => meltAnimation.isPlaying);
-
-        yield return new WaitForSeconds(2f);
         
         Managers.Chocolate.RemoveMelt(this);
     }

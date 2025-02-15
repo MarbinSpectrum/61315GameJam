@@ -45,7 +45,13 @@ public class ChocolateManager
     public void OnMeltingChocolates()
     {
         foreach (var chocolate in _chocolateList)
+        {
             chocolate.OnMelting();
+            if (!chocolate.CanMelting)
+                continue;
+            chocolate.CanMelting = false;
+            // SpawnMelt(chocolate.gameObject.transform.position, chocolate.Data);
+        }
     }
     
     private void InstantiateChocolate(BlockData data)
@@ -61,7 +67,7 @@ public class ChocolateManager
         _chocolateList.Add(chocolate);
     }
 
-    public void SpawnMelt(Vector3 pPos,BlockData pBlockData)
+    public void SpawnMelt(Vector3 pPos, BlockData pBlockData)
     {
         //pPos위치에 pBlockData에 해당하는 이펙트 출력
         ChocolateMelt newMelt = null;
@@ -109,6 +115,4 @@ public class ChocolateManager
             RemoveMelt(melt);
         meltList.Clear();
     }
-    
-    
 }

@@ -37,10 +37,12 @@ public class Chocolate : MonoBehaviour
     private bool _isDragging = false;
     private bool _isMoving = false;
     
-    private BlockData _data;
     private Vector3 _offset;
     private float _mouseZCoord;
     private int _chocolatePoint = 1;
+    
+    public BlockData Data { get; private set; }
+    public bool CanMelting { get; set; } = true;
 
     // --------------------------------------------------
     // Functions - Event
@@ -73,8 +75,8 @@ public class Chocolate : MonoBehaviour
         var angle = Mathf.Atan2(worldDragVector.y, worldDragVector.x) * Mathf.Rad2Deg;
         angle = Mathf.Round(angle / 90f) * 90f;
             
-        var x = (_data.dir is Define.EDirection.Left or Define.EDirection.Right) ? Mathf.Cos(angle * Mathf.Deg2Rad) : 0;
-        var y = (_data.dir is Define.EDirection.Up or Define.EDirection.Down) ? Mathf.Sin(angle * Mathf.Deg2Rad) : 0;
+        var x = (Data.dir is Define.EDirection.Left or Define.EDirection.Right) ? Mathf.Cos(angle * Mathf.Deg2Rad) : 0;
+        var y = (Data.dir is Define.EDirection.Up or Define.EDirection.Down) ? Mathf.Sin(angle * Mathf.Deg2Rad) : 0;
         _moveDirection = new Vector3(x, y, 0).normalized;
 
         var ray = new Ray(transform.position, _moveDirection);
@@ -94,7 +96,8 @@ public class Chocolate : MonoBehaviour
     {
         if (!_isMoving) 
             return;
-        
+
+        CanMelting = true;
         var ray = new Ray(transform.position, _moveDirection);
         if (Physics.Raycast(ray, out var hit, MAX_RAY_DISTANCE))
         {
@@ -128,7 +131,7 @@ public class Chocolate : MonoBehaviour
                 return;
             }
 
-            if (_data.color != eater._data.color)
+            if (Data.color != eater._data.color)
             {
                 
                 OnReset();
@@ -154,7 +157,7 @@ public class Chocolate : MonoBehaviour
     // --------------------------------------------------
     public void Init(BlockData data)
     {
-        _data = data;
+        Data = data;
         var x = data.col;
         var y = data.row;
         transform.position = new Vector3(x, -y + 2, 0);
@@ -185,8 +188,8 @@ public class Chocolate : MonoBehaviour
         _isMoving = false;
 
         var moveAmount = 0.5f;
-        var type = _data.blockType;
-        var dir = _data.dir;
+        var type = Data.blockType;
+        var dir = Data.dir;
         if ((type == Define.EBlockType.Chocolate2 && dir is Define.EDirection.Up or Define.EDirection.Down) ||
             (type == Define.EBlockType.Chocolate3 && dir is Define.EDirection.Left or Define.EDirection.Right) ||
             type == Define.EBlockType.Chocolate4)
@@ -236,11 +239,11 @@ public class Chocolate : MonoBehaviour
 
     private void SetPoint()
     {
-        if (_data.blockType == Define.EBlockType.Chocolate1)
+        if (Data.blockType == Define.EBlockType.Chocolate1)
             _chocolatePoint = 1;
-        else if (_data.blockType is Define.EBlockType.Chocolate2 or Define.EBlockType.Chocolate3)
+        else if (Data.blockType is Define.EBlockType.Chocolate2 or Define.EBlockType.Chocolate3)
             _chocolatePoint = 2;
-        else if (_data.blockType == Define.EBlockType.Chocolate4)
+        else if (Data.blockType == Define.EBlockType.Chocolate4)
             _chocolatePoint = 4;
     }
 
@@ -248,11 +251,11 @@ public class Chocolate : MonoBehaviour
     {
         var weightX = 0.5f;
         var weightY = 0.5f;
-        if (_data.blockType == Define.EBlockType.Chocolate2)
+        if (Data.blockType == Define.EBlockType.Chocolate2)
             weightY += 0.5f;
-        else if (_data.blockType == Define.EBlockType.Chocolate3)
+        else if (Data.blockType == Define.EBlockType.Chocolate3)
             weightX += 0.5f; 
-        else if (_data.blockType == Define.EBlockType.Chocolate4)
+        else if (Data.blockType == Define.EBlockType.Chocolate4)
         {
             weightX += 0.5f;
             weightY += 0.5f;
@@ -267,9 +270,9 @@ public class Chocolate : MonoBehaviour
 
     private void SetArrow()
     {
-        if (_data.blockType == Define.EBlockType.Chocolate2)
+        if (Data.blockType == Define.EBlockType.Chocolate2)
         {
-            if (_data.dir is Define.EDirection.Left or Define.EDirection.Right)
+            if (Data.dir is Define.EDirection.Left or Define.EDirection.Right)
             {
                 var rot = transArrow.rotation.eulerAngles;
                 rot.z = 0;
@@ -279,7 +282,7 @@ public class Chocolate : MonoBehaviour
         }
         else
         {
-            if (_data.dir is Define.EDirection.Up or Define.EDirection.Down)
+            if (Data.dir is Define.EDirection.Up or Define.EDirection.Down)
             {
                 var rot = transArrow.rotation.eulerAngles;
                 rot.z = 90;
@@ -290,7 +293,7 @@ public class Chocolate : MonoBehaviour
 
     private void SetColor()
     {
-        var colorIndex = _data.color;
+        var colorIndex = Data.color;
         var materialColor = Resources.Load<Material>($"Materials/{colorIndex}");
         if (materialColor == null)
         {
