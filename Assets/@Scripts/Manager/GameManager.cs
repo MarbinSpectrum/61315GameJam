@@ -1,17 +1,20 @@
-
+using System.Collections;
 using UnityEngine;
 
 public class GameManager
 {
     public int Score { get; private set; } = 0;
-    public int limitTime = 0;
+    public int Timer = 0;
     public int stageNum = 1;
-
+    private Coroutine timeCor;
+    private Vector3 cameraBasePos;
+    
     public void Init()
     {
         Score = 0;
-        limitTime = 0;
+        Timer = 0;
         stageNum = 1;
+        cameraBasePos = Camera.main.transform.position;
     }
 
     public void CreateStage()
@@ -20,10 +23,37 @@ public class GameManager
         Managers.Map.CreateMap(stageNum);
         Managers.Chocolate.SetChocolates(stageNum);
         Managers.Eater.SetEaters(stageNum);
+        
         var mapData = Managers.Data.GetMapData(stageNum);
+        Timer = mapData.limitTime;
+        Timer = 5;
 
         if (Camera.main != null)
+        {
+            Camera.main.transform.position = cameraBasePos;
             Camera.main.transform.position += new Vector3(mapData.M / 2f + 1f, -0.5f,0f);
+        }
+
+        if (timeCor != null)
+        {
+            CoroutineHelper.StopCoroutine(timeCor);
+            timeCor = null;
+        }
+
+        timeCor = CoroutineHelper.StartCoroutine(LimitTimeCor());
+    }
+
+    private IEnumerator LimitTimeCor()
+    {
+        //타이머가 1초마다 줄어들게 만듬
+        while (Timer > 0)
+        {
+            Timer--;
+            yield return new WaitForSeconds(1);
+        }
+        
+        //타이머가 끝남 게임오버임
+        Managers.UI.ShowPopupUI<UI_Popup>("FailPopup");
     }
     
     public void IncreaseScore(int num = 1)

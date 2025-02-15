@@ -6,6 +6,7 @@ public class MainScene : MonoBehaviour
     {
         Application.targetFrameRate = 60;
         
+        CoroutineHelper.Init();
         Managers.Init();
         Managers.Game.Init();
         Managers.Data.Init();
