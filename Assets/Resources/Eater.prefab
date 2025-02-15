@@ -5282,7 +5282,7 @@ SkinnedMeshRenderer:
   - {fileID: -8247417321557204785, guid: a3096f82a3506164eb6875e8703c2805, type: 3}
   - {fileID: 4835078630258379571, guid: a3096f82a3506164eb6875e8703c2805, type: 3}
   - {fileID: -1472984131464211615, guid: a3096f82a3506164eb6875e8703c2805, type: 3}
-  - {fileID: 8214333394354215739, guid: a3096f82a3506164eb6875e8703c2805, type: 3}
+  - {fileID: 2100000, guid: 9de3cecdea9e5a741924220e235ba520, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5412,6 +5412,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4909079307032758074}
   - component: {fileID: 163738540212203029}
+  - component: {fileID: 5224648188008984303}
   m_Layer: 0
   m_Name: character_W1
   m_TagString: Untagged
@@ -5453,6 +5454,26 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &5224648188008984303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5722770222299536768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b37ebf3af3923484195555f0e004b92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skinnedMeshRenderer: {fileID: 45900296597797284}
+  _material:
+  - {fileID: 2100000, guid: e0e75a6c63eb2c4438fc9798ca669638, type: 2}
+  - {fileID: 2100000, guid: 312596bb7d9c86f4bb4bf3f048303a22, type: 2}
+  - {fileID: 2100000, guid: 77310d6e17030c7498206b4b691990eb, type: 2}
+  - {fileID: 2100000, guid: 12ee3e39686cf4f439f1cfe6d4fde263, type: 2}
+  - {fileID: 2100000, guid: 343e72a9deb5df94f9cb97a2f25ea09d, type: 2}
+  - {fileID: 2100000, guid: 9de3cecdea9e5a741924220e235ba520, type: 2}
 --- !u!1 &5928176893898699001
 GameObject:
   m_ObjectHideFlags: 0
@@ -15735,6 +15756,7 @@ GameObject:
   m_Component:
   - component: {fileID: 268926954191989182}
   - component: {fileID: 2702457380014012441}
+  - component: {fileID: 8046116259743209170}
   m_Layer: 0
   m_Name: character_M2
   m_TagString: Untagged
@@ -15776,6 +15798,26 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &8046116259743209170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7712346013288500212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b37ebf3af3923484195555f0e004b92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skinnedMeshRenderer: {fileID: 8045755375280180954}
+  _material:
+  - {fileID: 2100000, guid: e0e75a6c63eb2c4438fc9798ca669638, type: 2}
+  - {fileID: 2100000, guid: 312596bb7d9c86f4bb4bf3f048303a22, type: 2}
+  - {fileID: 2100000, guid: 77310d6e17030c7498206b4b691990eb, type: 2}
+  - {fileID: 2100000, guid: 12ee3e39686cf4f439f1cfe6d4fde263, type: 2}
+  - {fileID: 2100000, guid: 343e72a9deb5df94f9cb97a2f25ea09d, type: 2}
+  - {fileID: 2100000, guid: 9de3cecdea9e5a741924220e235ba520, type: 2}
 --- !u!1 &7772975293265375367
 GameObject:
   m_ObjectHideFlags: 0
