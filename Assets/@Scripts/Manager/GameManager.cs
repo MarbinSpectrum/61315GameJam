@@ -58,12 +58,15 @@ public class GameManager
 
         if (Camera.main != null)
         {
-            Camera.main.transform.position = _cameraBasePos;
-            float weight = Mathf.Max(mapData.M, mapData.N) * 0.8f;
-            Camera.main.transform.position += new Vector3(mapData.M / 2f + 1f, -0.5f, 0);
-            Camera.main.orthographicSize += weight * 0.25f;
+            var n = mapData.N;
+            var m = mapData.M;
+            var targetCameraPos = _cameraBasePos;
+            targetCameraPos.x += 0.5f * m;
+            targetCameraPos.z += -1.0f * m;
+            targetCameraPos.y += -0.5f * n;
+            Camera.main.transform.DOMove(targetCameraPos, 0.5f);
         }
-        
+
         SetCoroutines();
     }
     
