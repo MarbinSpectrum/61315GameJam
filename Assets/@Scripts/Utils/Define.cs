@@ -74,7 +74,6 @@ public static class Define
         Idle,
         Eat,
         Angry,
-        Nice,
     }
 
     public enum EDataTableType

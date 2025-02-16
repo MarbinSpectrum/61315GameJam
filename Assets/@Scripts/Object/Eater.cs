@@ -81,7 +81,6 @@ public class Eater : MonoBehaviour
 
     public void ChangeState(Define.EEaterState state)
     {
-        // 깃액션 테스트
         if (_currentState == state)
             return;
 
@@ -96,9 +95,6 @@ public class Eater : MonoBehaviour
             case Define.EEaterState.Angry:
                 OnAngry();
                 break;
-            case Define.EEaterState.Nice:
-                OnNice();
-                break;
         }
 
         DOVirtual.DelayedCall(ANIMATION_INTERVAL, () =>
@@ -111,20 +107,17 @@ public class Eater : MonoBehaviour
     private void OnEat()
     {
         foreach (var eater in eaters)
+        {
             eater.OnEat();
-        Managers.Sound.Play("Cb_Eat",Define.ESoundType.EFFECT);
+            eater.OnOWO();
+        }
+        Managers.Sound.Play("Cb_Eat");
     }
 
     private void OnAngry()
     {
         foreach (var eater in eaters)
             eater.OnAngry();
-        Managers.Sound.Play("Cb_Hit",Define.ESoundType.EFFECT);
-    }
-
-    private void OnNice()
-    {
-        foreach (var eater in eaters)
-            eater.OnNice();
+        Managers.Sound.Play("Cb_Hit");
     }
 }

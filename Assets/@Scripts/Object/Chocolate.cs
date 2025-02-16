@@ -24,11 +24,14 @@ public class Chocolate : MonoBehaviour
     private const float MOVE_SPEED = 10f;
     private const float MAX_RAY_DISTANCE = 50f;
     private const float MOVE_WAIT_TIME = 0.5f;
+    private const float START_MELTING_SCALE = 0.02f;
+    private const float MELTING_SCALE_INCREMENT = 0.01f;
     
     // ----- Normal
-    private Vector3 _vibrationScaleVector = new(VIBRATION_SCALE, VIBRATION_SCALE, 0);
-    private Vector3 _vibrationRotationVector = new(VIBRATION_ROTATION, VIBRATION_ROTATION, 0);
-    private Vector3 _meltingScaleVector;
+    private Vector3 _vibrationScale = new(VIBRATION_SCALE, VIBRATION_SCALE, 0);
+    private Vector3 _vibrationRotation = new(VIBRATION_ROTATION, VIBRATION_ROTATION, 0);
+    private Vector3 _meltingScale = new(START_MELTING_SCALE, START_MELTING_SCALE, 0);
+    private Vector3 _meltingIncrement = new(MELTING_SCALE_INCREMENT, MELTING_SCALE_INCREMENT, 0);
     
     private Vector3 _originPos;
     private Vector3 _originRot;
@@ -123,12 +126,13 @@ public class Chocolate : MonoBehaviour
                 
                 OnReset();
                 OnVibration();
+                eater.ChangeState(Define.EEaterState.Angry);
                 return;
             }
 
             var blockType = Data.blockType;
             var dir = Data.dir;
-            int chocolateSize = 1;
+            var chocolateSize = 1;
             if (blockType == Define.EBlockType.Chocolate2 && dir is Define.EDirection.Left or Define.EDirection.Right)
                 chocolateSize = 2;
             else if (blockType == Define.EBlockType.Chocolate3 && dir is Define.EDirection.Up or Define.EDirection.Down)
@@ -140,6 +144,7 @@ public class Chocolate : MonoBehaviour
             {
                 OnReset();
                 OnVibration();
+                eater.ChangeState(Define.EEaterState.Angry);
                 return;
             }
 
@@ -174,13 +179,12 @@ public class Chocolate : MonoBehaviour
         _originPos = transform.position;
         _originRot = transform.eulerAngles;
         _originScale = transChocolateChild.localScale;
-        
-        _meltingScaleVector = new Vector3(_originScale.x * MELTING_SCALE_PERCENT, _originScale.y * MELTING_SCALE_PERCENT, 0);
     }
 
     public void OnMelting()
     {
-        var targetScale = transChocolateChild.localScale - _meltingScaleVector;
+        _meltingScale += _meltingIncrement;
+        var targetScale = transChocolateChild.localScale - _meltingScale;
         transChocolateChild.DOScale(targetScale, 0.2f).OnComplete(() =>
         {
             _originScale = transChocolateChild.localScale;
@@ -222,11 +226,11 @@ public class Chocolate : MonoBehaviour
 
     private void OnVibration()
     {
-        transChocolateChild.DOShakeScale(VIBRATION_TIME, _vibrationScaleVector, 10, 0f).OnComplete(() =>
+        transChocolateChild.DOShakeScale(VIBRATION_TIME, _vibrationScale, 10, 0f).OnComplete(() =>
         {
             transChocolateChild.DOScale(_originScale, VIBRATION_TIME);
         });
-        transform.DOShakeRotation(VIBRATION_TIME, _vibrationRotationVector, 100, 0f).OnComplete(() =>
+        transform.DOShakeRotation(VIBRATION_TIME, _vibrationRotation, 100, 0f).OnComplete(() =>
         {
             transform.DORotate(_originRot, VIBRATION_TIME);
         });

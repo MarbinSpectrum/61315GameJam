@@ -132,7 +132,7 @@ public class EaterControl : MonoBehaviour
         angryEmoji.Play();
     }
 
-    public void OnNice()
+    public void OnOWO()
     {
         owoEmoji.Play();
     }
