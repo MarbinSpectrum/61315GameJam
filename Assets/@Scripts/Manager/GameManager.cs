@@ -21,7 +21,7 @@ public class GameManager
     // ----- Normal
     public int StageNumber = 1;
     
-    private Vector3 _cameraBasePos;
+    private Vector3 _originCameraPos;
     private bool _isPlaying = false;
     private float _meltingInterval = 0f;
     private WaitForSeconds _MeltingWaitTime = null;
@@ -39,7 +39,7 @@ public class GameManager
         Timer = 0;
         CurrentTimer = 0;
         StageNumber = 1;
-        _cameraBasePos = Camera.main.transform.position;
+        _originCameraPos = Camera.main.transform.position;
     }
 
     public void CreateStage()
@@ -56,17 +56,7 @@ public class GameManager
         _meltingInterval = (Timer * MELTING_TIME_PERCENT);
         _MeltingWaitTime = new WaitForSeconds(_meltingInterval);
 
-        if (Camera.main != null)
-        {
-            var n = mapData.N;
-            var m = mapData.M;
-            var targetCameraPos = _cameraBasePos;
-            targetCameraPos.x += 0.5f * m;
-            targetCameraPos.z += -1.0f * m;
-            targetCameraPos.y += -0.5f * n;
-            Camera.main.transform.DOMove(targetCameraPos, 0.5f);
-        }
-
+        SetCamera(mapData);
         SetCoroutines();
     }
     
@@ -111,6 +101,20 @@ public class GameManager
         {
             CoroutineHelper.StopCoroutine(_timeCor);
             _timeCor = null;
+        }
+    }
+
+    private void SetCamera(MapData mapData)
+    {
+        if (Camera.main != null)
+        {
+            var n = mapData.N;
+            var m = mapData.M;
+            var targetCameraPos = _originCameraPos;
+            targetCameraPos.x += 0.5f * m;
+            targetCameraPos.z += -1.0f * m;
+            targetCameraPos.y += -0.5f * n;
+            Camera.main.transform.DOMove(targetCameraPos, 0.5f);
         }
     }
     
