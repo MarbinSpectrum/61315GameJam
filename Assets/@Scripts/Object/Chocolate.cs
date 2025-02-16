@@ -9,6 +9,7 @@ public class Chocolate : MonoBehaviour
     [SerializeField] private Transform transChocolateChild;
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private Transform transArrow;
+    [SerializeField] private ChocolateMelt meltEffect;
 
     // --------------------------------------------------
     // Variables
@@ -19,11 +20,9 @@ public class Chocolate : MonoBehaviour
     private const float VIBRATION_TIME = 0.1f;
     private const float RESET_TIME = 0.5f;
     private const float EATEN_MOVE_TIME = 0.2f;
-    private const float MELTING_SCALE_PERCENT = 0.08f;
     private const float DRAG_THRESHOLD = 100f;
     private const float MOVE_SPEED = 10f;
     private const float MAX_RAY_DISTANCE = 50f;
-    private const float MOVE_WAIT_TIME = 0.5f;
     private const float START_MELTING_SCALE = 0.02f;
     private const float MELTING_SCALE_INCREMENT = 0.01f;
     
@@ -33,7 +32,6 @@ public class Chocolate : MonoBehaviour
     private Vector3 _meltingScale = new(START_MELTING_SCALE, START_MELTING_SCALE, 0);
     private Vector3 _meltingIncrement = new(MELTING_SCALE_INCREMENT, MELTING_SCALE_INCREMENT, 0);
     
-    private Vector3 _originPos;
     private Vector3 _originRot;
     private Vector3 _originScale;
     
@@ -41,7 +39,6 @@ public class Chocolate : MonoBehaviour
     private Vector3 _moveDirection;
     private bool _isDragging = false;
     private bool _isMoving = false;
-    private WaitForSeconds _moveWaitTime = new(MOVE_WAIT_TIME);
 
     private Vector3 _offset;
     private float _mouseZCoord;
@@ -175,8 +172,8 @@ public class Chocolate : MonoBehaviour
         SetArrow();
         SetPoint();
         SetColor();
+        meltEffect.SetMelt(Data.color);
         
-        _originPos = transform.position;
         _originRot = transform.eulerAngles;
         _originScale = transChocolateChild.localScale;
     }
