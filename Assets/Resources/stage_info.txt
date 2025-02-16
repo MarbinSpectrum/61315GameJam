@@ -6,3 +6,4 @@ stage_number	n	m	timer
 5	3	2	40
 6	3	3	25
 7	6	6	55
+8	6	4	35

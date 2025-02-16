@@ -172,7 +172,8 @@ public class Chocolate : MonoBehaviour
         SetArrow();
         SetPoint();
         SetColor();
-        meltEffect.SetMelt(Data.color);
+        meltEffect.gameObject.SetActive(false);
+        // meltEffect.SetMelt(Data.color);
         
         _originRot = transform.eulerAngles;
         _originScale = transChocolateChild.localScale;

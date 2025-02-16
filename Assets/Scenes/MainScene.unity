@@ -199,11 +199,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b07a3089c7953b94ebbdd787d399be17, type: 3}
---- !u!1 &109458454 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b07a3089c7953b94ebbdd787d399be17, type: 3}
-  m_PrefabInstance: {fileID: 109458453}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &538861688
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e8e3583e0fe17548874c75b7f6e25cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  background: {fileID: 109458454}
 --- !u!1001 &627268626
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -259,7 +253,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 149535322595533857, guid: 2c0000a64054b2745a4fa3fa11d08112, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -97.634766
+      value: -300
       objectReference: {fileID: 0}
     - target: {fileID: 2019290334078999204, guid: 2c0000a64054b2745a4fa3fa11d08112, type: 3}
       propertyPath: m_Pivot.x
@@ -351,7 +345,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8205127233018192700, guid: 2c0000a64054b2745a4fa3fa11d08112, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -97.98535
+      value: -270
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
