@@ -10,6 +10,7 @@ public class GameManager
     public int Score { get; private set; } = 0;
     public int CurrentTimer { get; private set; } = 0;
     public int Timer { get; private set; } = 0;
+    public int MaxStageNumber { get; private set; } = 7;
     
     // --------------------------------------------------
     // Variables

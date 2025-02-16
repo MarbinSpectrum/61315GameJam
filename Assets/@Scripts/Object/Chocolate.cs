@@ -282,7 +282,6 @@ public class Chocolate : MonoBehaviour
                 var rot = transArrow.rotation.eulerAngles;
                 rot.z = 0;
                 transArrow.rotation = Quaternion.Euler(rot);
-                transArrow.localScale *= 0.5f;
             }
         }
         else

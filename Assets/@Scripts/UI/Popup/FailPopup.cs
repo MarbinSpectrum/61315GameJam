@@ -1,19 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class FailPopup : UI_Popup
 {
-    public override void ClosePopupUI()
-    {
-        base.ClosePopupUI();
-        Managers.Game.CreateStage();
-    }
-    
     public override void Init()
     {
         base.Init();
 
-        Managers.Sound.Play("Cb_Fail",Define.ESoundType.EFFECT);
+        OnAfterCloseAction += Retry;
+        Managers.Sound.Play("Cb_Fail");
+    }
+
+    private void Retry()
+    {
+        Managers.Game.CreateStage();
     }
 }
